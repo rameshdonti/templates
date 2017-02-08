@@ -28,11 +28,11 @@
         }
     },
     "variables": {
-        "dscScriptsFolder": "dsc-scripts/new",
+        "dscScriptsFolder": "dsc-scripts/master",
         "dscScriptsUrl": "[concat(parameters('baseUrl'), variables('dscScriptsFolder'))]",
         "dscTemplate": "[concat(variables('resourcesUrl'), '/', 'extn-dsc.template.json')]",
         "scriptTemplate": "[concat(variables('resourcesUrl'), '/', 'extn-script.template.json')]",
-        "resourcesFolder": "resources/new",
+        "resourcesFolder": "resources/master",
         "resourcesUrl": "[concat(parameters('baseUrl'), variables('resourcesFolder'))]",
         "sharedTemplate": "[concat(variables('resourcesUrl'), '/', 'shared-resources.json')]",
         "avsName": "vm-avs",

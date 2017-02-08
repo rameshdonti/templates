@@ -28,7 +28,7 @@
         }
     },
     "variables": {
-        "resourcesFolder": "resources/new",
+        "resourcesFolder": "resources/master",
         "resourcesUrl": "[concat(parameters('baseUrl'), variables('resourcesFolder'))]",
         "sharedTemplate": "[concat(variables('resourcesUrl'), '/', 'shared-resources.json')]",
         "avsName": "vm-avs",

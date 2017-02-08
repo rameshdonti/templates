@@ -34,8 +34,8 @@
         }
     },
     "variables": {
-        "dscScriptsFolder": "dsc-scripts/new",
-        "resourcesFolder": "resources/new",
+        "dscScriptsFolder": "dsc-scripts/master",
+        "resourcesFolder": "resources/master",
         "dscScriptsUrl": "[concat(parameters('baseUrl'), variables('dscScriptsFolder'))]",
         "resourcesUrl": "[concat(parameters('baseUrl'), variables('resourcesFolder'))]",
         "dscTemplate": "[concat(variables('resourcesUrl'), '/', 'extn-dsc.template.json')]",
