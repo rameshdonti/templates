@@ -44,7 +44,7 @@
         "lbTemplate": "[concat(variables('resourcesUrl'), '/', 'lb.template.json')]",
         "nicTemplate": "[concat(variables('resourcesUrl'), '/', 'nic.template.json')]",
         "nsgTemplate": "[concat(variables('resourcesUrl'), '/', 'nsg.template.json')]",
-        "pipTemplate": "[concat(parameters('resourcesUrl'), '/pip-', parameters('pip-settings').newOrExisting, '.template.json')]",
+        "pipTemplate": "[concat(variables('resourcesUrl'), '/pip-', parameters('pip-settings').newOrExisting, '.template.json')]",
         "sharedTemplate": "[concat(variables('resourcesUrl'), '/', 'shared-resources.json')]",
         "storageTemplate": "[concat(variables('resourcesUrl'), '/storage-', parameters('storage-settings').newOrExisting, '.template.json')]",
         "avsName": "web-avs",
