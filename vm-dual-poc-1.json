@@ -80,7 +80,7 @@
             [ "linux-diagnostic", "Microsoft.OSTCExtensions", "LinuxDiagnostic", "2.3" ]
         ],
         "vmDscScript": [
-            [ "dsc-iis", "Microsoft.Powershell", "DSC", "2.21", "[variables('dscTemplate')]", "[variables('dscScriptsUrl')]", "iis-on-windows-vm", "iis-config-dsc", "Main" ],
+            [ "dsc-iis", "Microsoft.Powershell", "DSC", "2.9", "[variables('dscTemplate')]", "[variables('dscScriptsUrl')]", "iis-on-windows-vm", "iis-config-dsc", "Main" ],
             [ "script-apache", "Microsoft.Azure.Extensions", "CustomScript", "2.0", "[variables('scriptTemplate')]", "[variables('dscScriptsUrl')]", "apache2-on-ubuntu-vm", "install_apache.sh", null ]
         ],
         "vmTemplate": "[concat(variables('resourcesUrl'), '/vm-', variables('vmOS')[parameters('vm-settings').type][3], '.template.json')]"
