@@ -41,7 +41,7 @@
         "dscTemplate": "[concat(variables('resourcesUrl'), '/', 'extn-dsc.template.json')]",
         "nicTemplate": "[concat(variables('resourcesUrl'), '/', 'nic.template.json')]",
         "nsgTemplate": "[concat(variables('resourcesUrl'), '/', 'nsg.template.json')]",
-        "pipTemplate": "[concat(parameters('resourcesUrl'), '/pip-', parameters('storage-settings').newOrExisting, '.template.json')]",
+        "pipTemplate": "[concat(parameters('resourcesUrl'), '/pip-', parameters('pip-settings').newOrExisting, '.template.json')]",
         "scriptTemplate": "[concat(variables('resourcesUrl'), '/', 'extn-script.template.json')]",
         "sharedTemplate": "[concat(variables('resourcesUrl'), '/', 'shared-resources.json')]",
         "vmTemplate": "[concat(variables('resourcesUrl'), '/vm-windows.template.json')]",
