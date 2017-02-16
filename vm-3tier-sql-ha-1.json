@@ -57,13 +57,11 @@
         "resourcesFolder": "resources/feature-pattern-3",
         "dscScriptsUrl": "[concat(parameters('baseUrl'), variables('dscScriptsFolder'))]",
         "resourcesUrl": "[concat(parameters('baseUrl'), variables('resourcesFolder'))]",
-        "avsNames": [
-            "mgmt-avs",
-            "web-avs",
-            "biz-avs",
-            "sql-avs",
-            "dc-avs"
-        ],
+        "avsSettings": {
+            "name": [ "mgmt-avs", "web-avs", "biz-avs", "sql-avs", "dc-avs" ],
+            "updateCount": [ 5, 5, 5, 5, 5 ],
+            "faultCount": [ 3, 3, 3, 3, 3 ]
+        },
         "diagTemplate": "[concat(variables('resourcesUrl'), '/', 'extn-diag.template.json')]",
         "dscTemplate": "[concat(variables('resourcesUrl'), '/', 'extn-dsc.template.json')]",
         "scriptTemplate": "[concat(variables('resourcesUrl'), '/', 'extn-script.template.json')]",
@@ -195,7 +193,7 @@
                     },
                     "avs-settings": {
                         "value": {
-                            "names": "[variables('avsNames')]",
+                            "names": "[variables('avsSettings')[0]]",
                             "updateCount": 5,
                             "faultCount": 3
                         }
@@ -901,13 +899,9 @@
             }
         },
         {
-            "name": "[concat('mgmtNic-', copyindex())]",
+            "name": "mgmtNic",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2016-09-01",
-            "copy": {
-                "name": "nicLoop",
-                "count": "[parameters('vm-settings').vmCount]"
-            },
             "dependsOn": [
                 "[resourceId('Microsoft.Resources/deployments', 'sharedResources')]",
                 "[resourceId('Microsoft.Resources/deployments', 'mgmtNsg')]",
@@ -922,7 +916,7 @@
                 "parameters": {
                     "nic-settings": {
                         "value": {
-                            "name": "[concat('mgmt-nic-', copyindex())]",
+                            "name": "mgmt-nic",
                             "ipConfigurations": [
                                 {
                                     "name": "ipconfig1",
@@ -1179,6 +1173,46 @@
             }
         },
         {
+            "name": "mgmtVM",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2016-09-01",
+            "dependsOn": [
+                "[resourceId('Microsoft.Resources/deployments', 'sharedResources')]",
+                "[resourceId('Microsoft.Resources/deployments', 'mgmtNic')]"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('vmTemplate')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "storage-settings": {
+                        "value": {
+                            "name": "[parameters('storage-settings').mgmt.accounts[0]]",
+                            "accountType": "[parameters('storage-settings').mgmt.accountType]",
+                            "newOrExisting": "[parameters('storage-settings').mgmt.newOrExisting]",
+                            "existingRg": "[parameters('storage-settings').mgmt.existingRg]"
+                        }
+                    },
+                    "vm-settings": {
+                        "value": {
+                            "name": "cluster-fsw-vm",
+                            "adminUserName": "[parameters('vm-settings').adminUserName]",
+                            "adminPassword": "[parameters('vm-settings').adminPassword]",
+                            "avsID": "[resourceId('Microsoft.Compute/availabilitySets', variables('avsSettings')[0])]",
+                            "imagePublisher": "[variables('vmOS')[parameters('vm-settings').type][0]]",
+                            "imageOffer": "[variables('vmOS')[parameters('vm-settings').type][1]]",
+                            "imageSku": "[variables('vmOS')[parameters('vm-settings').type][2]]",
+                            "nicID": "[reference('clusterFswNic').outputs.nicID.value]",
+                            "vmSize": "Standard_D2_v2",
+                            "storageAccountContainerName": "[toLower(concat(resourceGroup().name, '-', uniqueString(resourceGroup().id, deployment().name)))]"
+                        }
+                    }
+                }
+            }
+        },
+        {
             "name": "[concat('webVM-', copyindex())]",
             "copy": {
                 "name": "vmLoop",
@@ -1200,6 +1234,7 @@
                     "storage-settings": {
                         "value": {
                             "name": "[parameters('storage-settings').web.accounts[variables('math').modulo2[copyIndex()]]]",
+                            "accountType": "[parameters('storage-settings').web.accountType]",
                             "newOrExisting": "[parameters('storage-settings').web.newOrExisting]",
                             "existingRg": "[parameters('storage-settings').web.existingRg]"
                         }
@@ -1209,7 +1244,7 @@
                             "name": "[concat('web-vm-', copyindex())]",
                             "adminUserName": "[parameters('vm-settings').adminUserName]",
                             "adminPassword": "[parameters('vm-settings').adminPassword]",
-                            "avsID": "[resourceId('Microsoft.Compute/availabilitySets', variables('avsNames')[1])]",
+                            "avsID": "[resourceId('Microsoft.Compute/availabilitySets', variables('avsSettings').name[1])]",
                             "imagePublisher": "[variables('vmOS')[parameters('vm-settings').type][0]]",
                             "imageOffer": "[variables('vmOS')[parameters('vm-settings').type][1]]",
                             "imageSku": "[variables('vmOS')[parameters('vm-settings').type][2]]",
@@ -1243,6 +1278,7 @@
                     "storage-settings": {
                         "value": {
                             "name": "[parameters('storage-settings').biz.accounts[variables('math').modulo2[copyIndex()]]]",
+                            "accountType": "[parameters('storage-settings').biz.accountType]",
                             "newOrExisting": "[parameters('storage-settings').biz.newOrExisting]",
                             "existingRg": "[parameters('storage-settings').biz.existingRg]"
                         }
@@ -1252,7 +1288,7 @@
                             "name": "[concat('biz-vm-', copyindex())]",
                             "adminUserName": "[parameters('vm-settings').adminUserName]",
                             "adminPassword": "[parameters('vm-settings').adminPassword]",
-                            "avsID": "[resourceId('Microsoft.Compute/availabilitySets', variables('avsNames')[2])]",
+                            "avsID": "[resourceId('Microsoft.Compute/availabilitySets', variables('avsSettings').name[2])]",
                             "imagePublisher": "[variables('vmOS')[parameters('vm-settings').type][0]]",
                             "imageOffer": "[variables('vmOS')[parameters('vm-settings').type][1]]",
                             "imageSku": "[variables('vmOS')[parameters('vm-settings').type][2]]",
@@ -1286,6 +1322,7 @@
                     "storage-settings": {
                         "value": {
                             "name": "[parameters('storage-settings').sql.accounts[variables('math').modulo2[copyIndex()]]]",
+                            "accountType": "[parameters('storage-settings').sql.accountType]",
                             "newOrExisting": "[parameters('storage-settings').sql.newOrExisting]",
                             "existingRg": "[parameters('storage-settings').sql.existingRg]"
                         }
@@ -1295,7 +1332,7 @@
                             "name": "[concat('sql-vm-', copyindex())]",
                             "adminUserName": "[parameters('vm-settings').adminUserName]",
                             "adminPassword": "[parameters('vm-settings').adminPassword]",
-                            "avsID": "[resourceId('Microsoft.Compute/availabilitySets', variables('avsNames')[3])]",
+                            "avsID": "[resourceId('Microsoft.Compute/availabilitySets', variables('avsSettings').name[3])]",
                             "imagePublisher": "[variables('vmOS')[parameters('sql-settings').type][0]]",
                             "imageOffer": "[variables('vmOS')[parameters('sql-settings').type][1]]",
                             "imageSku": "[variables('vmOS')[parameters('sql-settings').type][2]]",
@@ -1329,6 +1366,7 @@
                     "storage-settings": {
                         "value": {
                             "name": "[parameters('storage-settings').dc.accounts[variables('math').modulo2[copyIndex()]]]",
+                            "accountType": "[parameters('storage-settings').dc.accountType]",
                             "newOrExisting": "[parameters('storage-settings').dc.newOrExisting]",
                             "existingRg": "[parameters('storage-settings').dc.existingRg]"
                         }
@@ -1338,7 +1376,7 @@
                             "name": "[concat('dc-vm-', copyindex())]",
                             "adminUserName": "[parameters('vm-settings').adminUserName]",
                             "adminPassword": "[parameters('vm-settings').adminPassword]",
-                            "avsID": "[resourceId('Microsoft.Compute/availabilitySets', variables('avsNames')[4])]",
+                            "avsID": "[resourceId('Microsoft.Compute/availabilitySets', variables('avsSettings').name[4])]",
                             "imagePublisher": "[variables('vmOS')[parameters('vm-settings').type][0]]",
                             "imageOffer": "[variables('vmOS')[parameters('vm-settings').type][1]]",
                             "imageSku": "[variables('vmOS')[parameters('vm-settings').type][2]]",
@@ -1368,8 +1406,9 @@
                     "storage-settings": {
                         "value": {
                             "name": "[parameters('storage-settings').sqlFsw.accounts[0]]",
-                            "newOrExisting": "[parameters('storage-settings').sql.newOrExisting]",
-                            "existingRg": "[parameters('storage-settings').sql.existingRg]"
+                            "accountType": "[parameters('storage-settings').sqlFsw.accountType]",
+                            "newOrExisting": "[parameters('storage-settings').sqlFsw.newOrExisting]",
+                            "existingRg": "[parameters('storage-settings').sqlFsw.existingRg]"
                         }
                     },
                     "vm-settings": {
@@ -1377,7 +1416,7 @@
                             "name": "cluster-fsw-vm",
                             "adminUserName": "[parameters('vm-settings').adminUserName]",
                             "adminPassword": "[parameters('vm-settings').adminPassword]",
-                            "avsID": "[resourceId('Microsoft.Compute/availabilitySets', variables('avsNames')[3])]",
+                            "avsID": "[resourceId('Microsoft.Compute/availabilitySets', variables('avsSettings').name[3])]",
                             "imagePublisher": "[variables('vmOS')[parameters('vm-settings').type][0]]",
                             "imageOffer": "[variables('vmOS')[parameters('vm-settings').type][1]]",
                             "imageSku": "[variables('vmOS')[parameters('vm-settings').type][2]]",
