@@ -134,7 +134,7 @@
             "apiVersion": "2016-09-01",
             "copy": {
                 "name": "storageLoop",
-                "count": "[parameters('storage-settings')]"
+                "count": "[length(parameters('storage-settings'))]"
             },
             "dependsOn": [],
             "properties": {
