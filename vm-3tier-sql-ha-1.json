@@ -130,6 +130,34 @@
     },
     "resources": [
         {
+            "name": "[concat('storage-', copyindex())]",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2016-09-01",
+            "copy": {
+                "name": "storageLoop",
+                "count": "[parameters('storage-settings')]"
+            },
+            "dependsOn": [],
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('storageTemplate')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "storage-settings": {
+                        "value": {
+                            "accounts": "[parameters('storage-settings')[copyIndex()].accounts]",
+                            "count": "[length(parameters('storage-settings')[copyIndex()].accounts)]",
+                            "accountType": "[parameters('storage-settings')[copyIndex()].accountType]",
+                            "newOrExisting": "[parameters('storage-settings')[copyIndex()].newOrExisting]",
+                            "existingRg": "[parameters('storage-settings')[copyIndex()].existingRg]"
+                        }
+                    }
+                }
+            }
+        },
+        {
             "name": "sharedResources",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2016-09-01",
@@ -143,11 +171,11 @@
                 "parameters": {
                     "storage-settings": {
                         "value": {
-                            "accounts": "[parameters('storage-settings').accounts]",
-                            "count": "[length(parameters('storage-settings').accounts)]",
-                            "accountType": "[parameters('storage-settings').type]",
-                            "newOrExisting": "[parameters('storage-settings').newOrExisting]",
-                            "existingRg": "[parameters('storage-settings').existingRg]"
+                            "accounts": "[parameters('storage-settings')[0].accounts]",
+                            "count": "[length(parameters('storage-settings')[0].accounts)]",
+                            "accountType": "[parameters('storage-settings')[0].accountType]",
+                            "newOrExisting": "Existing",
+                            "existingRg": "[reference('storage-0').outputs.storageAccountId.value.name]"
                         }
                     },
                     "vnet-settings": {
@@ -192,11 +220,7 @@
                         }
                     },
                     "avs-settings": {
-                        "value": {
-                            "names": "[variables('avsSettings')[0]]",
-                            "updateCount": 5,
-                            "faultCount": 3
-                        }
+                        "value": "[variables('avsSettings')]"
                     },
                     "resourcesUrl": {
                         "value": "[variables('resourcesUrl')]"
