@@ -70,7 +70,6 @@
         "nsgTemplate": "[concat(variables('resourcesUrl'), '/', 'nsg.template.json')]",
         "pipTemplate": "[concat(variables('resourcesUrl'), '/pip-', parameters('pip-settings').newOrExisting, '.template.json')]",
         "sharedTemplate": "[concat(variables('resourcesUrl'), '/sharedResources.template.json')]",
-        "storageTemplate": "[concat(variables('resourcesUrl'), '/storage-', parameters('storage-settings').newOrExisting, '.template.json')]",
         "vnetTemplate": "[concat(variables('resourcesUrl'), '/vnet-', parameters('vnet-settings').newOrExisting, '.template.json')]",
         "dcCount": 2,
         "extLbBackendPoolID": "[concat(variables('extLbID'),'/backendAddressPools/', variables('extLbBackendPoolName'))]",
