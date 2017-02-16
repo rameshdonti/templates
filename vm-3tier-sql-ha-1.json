@@ -141,7 +141,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[variables('storageTemplate')]",
+                    "uri": "[concat(variables('resourcesUrl'), '/storage-', parameters('storage-settings')[copyIndex()].newOrExisting, '.template.json')]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
