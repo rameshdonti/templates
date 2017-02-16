@@ -974,7 +974,7 @@
             "apiVersion": "2016-09-01",
             "copy": {
                 "name": "nicLoop",
-                "count": "[parameters('vm-settings').vmCount]"
+                "count": "[parameters('vm-settings').count]"
             },
             "dependsOn": [
                 "[resourceId('Microsoft.Resources/deployments', 'sharedResources')]",
@@ -1025,7 +1025,7 @@
             "apiVersion": "2016-09-01",
             "copy": {
                 "name": "nicLoop",
-                "count": "[parameters('vm-settings').vmCount]"
+                "count": "[parameters('vm-settings').count]"
             },
             "dependsOn": [
                 "[resourceId('Microsoft.Resources/deployments', 'sharedResources')]",
@@ -1070,7 +1070,7 @@
             "apiVersion": "2016-09-01",
             "copy": {
                 "name": "nicLoop",
-                "count": "[parameters('vm-settings').vmCount]"
+                "count": "[parameters('vm-settings').count]"
             },
             "dependsOn": [
                 "[resourceId('Microsoft.Resources/deployments', 'sharedResources')]",
@@ -1239,7 +1239,7 @@
             "name": "[concat('webVM-', copyindex())]",
             "copy": {
                 "name": "vmLoop",
-                "count": 1
+                "count": "[parameters('vm-settings').count]"
             },
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2016-09-01",
@@ -1283,7 +1283,7 @@
             "name": "[concat('bizVM-', copyindex())]",
             "copy": {
                 "name": "vmLoop",
-                "count": 1
+                "count": "[parameters('vm-settings').count]"
             },
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2016-09-01",
@@ -1327,7 +1327,7 @@
             "name": "[concat('sqlVM-', copyindex())]",
             "copy": {
                 "name": "vmLoop",
-                "count": 1
+                "count": "[parameters('sql-settings').count]"
             },
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2016-09-01",
