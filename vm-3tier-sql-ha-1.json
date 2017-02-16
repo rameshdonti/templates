@@ -254,7 +254,7 @@
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2016-09-01",
             "dependsOn": [
-                "[resourceId('Microsoft.Resources/deployments', 'public-ip')]"
+                "[resourceId('Microsoft.Resources/deployments', 'publicIp')]"
             ],
             "properties": {
                 "mode": "Incremental",
@@ -274,7 +274,7 @@
                                     "properties": {
                                         "privateIPAllocationMethod": "Dynamic",
                                         "publicIPAddress": {
-                                            "id": "[reference('public-ip').outputs.pipID.value]"
+                                            "id": "[reference('publicIp').outputs.pipID.value]"
                                         }
                                     }
                                 }
