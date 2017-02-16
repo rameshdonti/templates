@@ -928,7 +928,7 @@
             "dependsOn": [
                 "[resourceId('Microsoft.Resources/deployments', 'sharedResources')]",
                 "[resourceId('Microsoft.Resources/deployments', 'mgmtNsg')]",
-                "[resourceId('Microsoft.Resources/deployments', 'loadBalancer')]"
+                "[resourceId('Microsoft.Resources/deployments', 'externalLoadBalancer')]"
             ],
             "properties": {
                 "mode": "Incremental",
@@ -979,7 +979,7 @@
             "dependsOn": [
                 "[resourceId('Microsoft.Resources/deployments', 'sharedResources')]",
                 "[resourceId('Microsoft.Resources/deployments', 'webNsg')]",
-                "[resourceId('Microsoft.Resources/deployments', 'loadBalancer')]"
+                "[resourceId('Microsoft.Resources/deployments', 'externalLoadBalancer')]"
             ],
             "properties": {
                 "mode": "Incremental",
@@ -1074,7 +1074,8 @@
             },
             "dependsOn": [
                 "[resourceId('Microsoft.Resources/deployments', 'sharedResources')]",
-                "[resourceId('Microsoft.Resources/deployments', 'sqlNsg')]"
+                "[resourceId('Microsoft.Resources/deployments', 'sqlNsg')]",
+                "[resourceId('Microsoft.Resources/deployments', 'sqlLoadBalancer')]"
             ],
             "properties": {
                 "mode": "Incremental",
