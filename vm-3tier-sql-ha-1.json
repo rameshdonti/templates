@@ -174,7 +174,7 @@
                             "count": "[length(parameters('storage-settings')[0].accounts)]",
                             "accountType": "[parameters('storage-settings')[0].accountType]",
                             "newOrExisting": "Existing",
-                            "existingRg": "[reference('storage-0').outputs.storageAccountId.value.name]"
+                            "existingRg": "[resourceGroup().name]"
                         }
                     },
                     "vnet-settings": {
