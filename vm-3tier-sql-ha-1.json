@@ -207,7 +207,9 @@
                 "name": "storageLoop",
                 "count": "[length(parameters('storage-settings').web.accounts)]"
             },
-            "dependsOn": [],
+            "dependsOn": [
+                "[resourceId('Microsoft.Resources/deployments', 'sharedResources')]"
+            ],
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
@@ -232,7 +234,9 @@
                 "name": "storageLoop",
                 "count": "[length(parameters('storage-settings').biz.accounts)]"
             },
-            "dependsOn": [],
+            "dependsOn": [
+                "[resourceId('Microsoft.Resources/deployments', 'sharedResources')]"
+            ],
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
@@ -257,7 +261,9 @@
                 "name": "storageLoop",
                 "count": "[length(parameters('storage-settings').sql.accounts)]"
             },
-            "dependsOn": [],
+            "dependsOn": [
+                "[resourceId('Microsoft.Resources/deployments', 'sharedResources')]"
+            ],
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
@@ -282,7 +288,9 @@
                 "name": "storageLoop",
                 "count": "[length(parameters('storage-settings').fsw.accounts)]"
             },
-            "dependsOn": [],
+            "dependsOn": [
+                "[resourceId('Microsoft.Resources/deployments', 'sharedResources')]"
+            ],
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
@@ -307,7 +315,9 @@
                 "name": "storageLoop",
                 "count": "[length(parameters('storage-settings').diag.accounts)]"
             },
-            "dependsOn": [],
+            "dependsOn": [
+                "[resourceId('Microsoft.Resources/deployments', 'sharedResources')]"
+            ],
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
@@ -332,7 +342,9 @@
                 "name": "storageLoop",
                 "count": "[length(parameters('storage-settings').dc.accounts)]"
             },
-            "dependsOn": [],
+            "dependsOn": [
+                "[resourceId('Microsoft.Resources/deployments', 'sharedResources')]"
+            ],
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
