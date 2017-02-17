@@ -3,7 +3,7 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "storage-settings": {
-            "type": "array",
+            "type": "object",
             "metadata": {
                 "description": "These are settings for the Storage Account"
             }
