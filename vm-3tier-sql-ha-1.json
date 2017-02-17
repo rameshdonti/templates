@@ -75,8 +75,7 @@
         "extLbBackendPoolID": "[concat(variables('extLbID'),'/backendAddressPools/', variables('extLbBackendPoolName'))]",
         "extLbBackendPoolName": "extLb-backEnd-http",
         "extLbBackendPort": 3389,
-        "extLbFrontendPoolID": "[concat(variables('extLbID'),'/frontendIPConfigurations/', variables('extLbFrontendPoolName'))]",
-        "extLbFrontendPoolName": "extLb-frontEnd",
+        "extLbFrontendPoolID": "[concat(variables('extLbID'),'/frontendIPConfigurations/lb-frontEnd')]",
         "extLbID": "[resourceId('Microsoft.Network/loadBalancers', variables('extLbName'))]",
         "extLbName": "extLb",
         "extLbProbeID": "[concat(variables('extLbID'),'/probes/', variables('extLbProbeName'))]",
@@ -85,8 +84,7 @@
         "bizLbBackendPoolID": "[concat(variables('bizLbID'),'/backendAddressPools/', variables('bizLbBackendPoolName'))]",
         "bizLbBackendPoolName": "bizLb-backEnd",
         "bizLbFrontendIP": "[parameters('lb-settings').internalIPAddresses[0]]",
-        "bizLbFrontendPoolID": "[concat(variables('bizLbID'),'/frontendIPConfigurations/', variables('bizLbFrontendPoolName'))]",
-        "bizLbFrontendPoolName": "bizLb-frontEnd",
+        "bizLbFrontendPoolID": "[concat(variables('bizLbID'),'/frontendIPConfigurations/lb-frontEnd')]",
         "bizLbID": "[resourceId('Microsoft.Network/loadBalancers', variables('bizLbName'))]",
         "bizLbName": "bizLb",
         "bizLbPort": "[parameters('lb-settings').internalPorts[0]]",
@@ -404,7 +402,7 @@
                             "backendPort": "[variables('extLbBackendPort')]",
                             "frontendIPConfigurations": [
                                 {
-                                    "name": "[variables('extLbFrontendPoolName')]",
+                                    "name": "lb-frontEnd",
                                     "properties": {
                                         "privateIPAllocationMethod": "Dynamic",
                                         "publicIPAddress": {
@@ -481,7 +479,7 @@
                             "backendPort": "[variables('bizLbPort')]",
                             "frontendIPConfigurations": [
                                 {
-                                    "name": "[variables('bizLbFrontendPoolName')]",
+                                    "name": "lb-frontEnd",
                                     "properties": {
                                         "privateIPAddress": "[variables('bizLbFrontendIP')]",
                                         "privateIPAllocationMethod": "static"
