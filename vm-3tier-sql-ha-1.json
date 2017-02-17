@@ -129,31 +129,6 @@
     },
     "resources": [
         {
-            "name": "[concat('mgmtStorage-', copyindex())]",
-            "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2016-09-01",
-            "copy": {
-                "name": "storageLoop",
-                "count": "[length(parameters('storage-settings')[0].accounts)]"
-            },
-            "dependsOn": [],
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "[concat(variables('resourcesUrl'), '/storage-', parameters('storage-settings')[0].newOrExisting, '.template.json')]",
-                    "contentVersion": "1.0.0.0"
-                },
-                "parameters": {
-                    "storage-settings": {
-                        "value": {
-                            "name": "[parameters('storage-settings')[0].accounts[copyIndex()]]",
-                            "accountType": "[parameters('storage-settings')[0].accountType]"
-                        }
-                    }
-                }
-            }
-        },
-        {
             "name": "sharedResources",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2016-09-01",
@@ -167,11 +142,11 @@
                 "parameters": {
                     "storage-settings": {
                         "value": {
-                            "accounts": "[parameters('storage-settings')[0].accounts]",
-                            "count": "[length(parameters('storage-settings')[0].accounts)]",
-                            "accountType": "[parameters('storage-settings')[0].accountType]",
-                            "newOrExisting": "[parameters('storage-settings')[0].newOrExisting]",
-                            "existingRg": "[parameters('storage-settings')[0].existingRg]"
+                            "accounts": "[parameters('storage-settings').mgmt.accounts]",
+                            "count": "[length(parameters('storage-settings').mgmt.accounts)]",
+                            "accountType": "[parameters('storage-settings').mgmt.accountType]",
+                            "newOrExisting": "[parameters('storage-settings').mgmt.newOrExisting]",
+                            "existingRg": "[parameters('storage-settings').mgmt.existingRg]"
                         }
                     },
                     "vnet-settings": {
@@ -230,20 +205,20 @@
             "apiVersion": "2016-09-01",
             "copy": {
                 "name": "storageLoop",
-                "count": "[length(parameters('storage-settings')[1].accounts)]"
+                "count": "[length(parameters('storage-settings').web.accounts)]"
             },
             "dependsOn": [],
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[concat(variables('resourcesUrl'), '/storage-', parameters('storage-settings')[1].newOrExisting, '.template.json')]",
+                    "uri": "[concat(variables('resourcesUrl'), '/storage-', parameters('storage-settings').web.newOrExisting, '.template.json')]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
                     "storage-settings": {
                         "value": {
-                            "name": "[parameters('storage-settings')[1].accounts[copyIndex()]]",
-                            "accountType": "[parameters('storage-settings')[1].accountType]"
+                            "name": "[parameters('storage-settings').web.accounts[copyIndex()]]",
+                            "accountType": "[parameters('storage-settings').web.accountType]"
                         }
                     }
                 }
@@ -255,20 +230,20 @@
             "apiVersion": "2016-09-01",
             "copy": {
                 "name": "storageLoop",
-                "count": "[length(parameters('storage-settings')[2].accounts)]"
+                "count": "[length(parameters('storage-settings').biz.accounts)]"
             },
             "dependsOn": [],
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[concat(variables('resourcesUrl'), '/storage-', parameters('storage-settings')[2].newOrExisting, '.template.json')]",
+                    "uri": "[concat(variables('resourcesUrl'), '/storage-', parameters('storage-settings').biz.newOrExisting, '.template.json')]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
                     "storage-settings": {
                         "value": {
-                            "name": "[parameters('storage-settings')[2].accounts[copyIndex()]]",
-                            "accountType": "[parameters('storage-settings')[2].accountType]"
+                            "name": "[parameters('storage-settings').biz.accounts[copyIndex()]]",
+                            "accountType": "[parameters('storage-settings').biz.accountType]"
                         }
                     }
                 }
@@ -280,20 +255,20 @@
             "apiVersion": "2016-09-01",
             "copy": {
                 "name": "storageLoop",
-                "count": "[length(parameters('storage-settings')[3].accounts)]"
+                "count": "[length(parameters('storage-settings').sql.accounts)]"
             },
             "dependsOn": [],
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[concat(variables('resourcesUrl'), '/storage-', parameters('storage-settings')[3].newOrExisting, '.template.json')]",
+                    "uri": "[concat(variables('resourcesUrl'), '/storage-', parameters('storage-settings').sql.newOrExisting, '.template.json')]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
                     "storage-settings": {
                         "value": {
-                            "name": "[parameters('storage-settings')[3].accounts[copyIndex()]]",
-                            "accountType": "[parameters('storage-settings')[3].accountType]"
+                            "name": "[parameters('storage-settings').sql.accounts[copyIndex()]]",
+                            "accountType": "[parameters('storage-settings').sql.accountType]"
                         }
                     }
                 }
@@ -305,20 +280,20 @@
             "apiVersion": "2016-09-01",
             "copy": {
                 "name": "storageLoop",
-                "count": "[length(parameters('storage-settings')[4].accounts)]"
+                "count": "[length(parameters('storage-settings').fsw.accounts)]"
             },
             "dependsOn": [],
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[concat(variables('resourcesUrl'), '/storage-', parameters('storage-settings')[4].newOrExisting, '.template.json')]",
+                    "uri": "[concat(variables('resourcesUrl'), '/storage-', parameters('storage-settings').fsw.newOrExisting, '.template.json')]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
                     "storage-settings": {
                         "value": {
-                            "name": "[parameters('storage-settings')[4].accounts[copyIndex()]]",
-                            "accountType": "[parameters('storage-settings')[4].accountType]"
+                            "name": "[parameters('storage-settings').fsw.accounts[copyIndex()]]",
+                            "accountType": "[parameters('storage-settings').fsw.accountType]"
                         }
                     }
                 }
@@ -330,20 +305,20 @@
             "apiVersion": "2016-09-01",
             "copy": {
                 "name": "storageLoop",
-                "count": "[length(parameters('storage-settings')[5].accounts)]"
+                "count": "[length(parameters('storage-settings').diag.accounts)]"
             },
             "dependsOn": [],
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[concat(variables('resourcesUrl'), '/storage-', parameters('storage-settings')[5].newOrExisting, '.template.json')]",
+                    "uri": "[concat(variables('resourcesUrl'), '/storage-', parameters('storage-settings').diag.newOrExisting, '.template.json')]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
                     "storage-settings": {
                         "value": {
-                            "name": "[parameters('storage-settings')[5].accounts[copyIndex()]]",
-                            "accountType": "[parameters('storage-settings')[5].accountType]"
+                            "name": "[parameters('storage-settings').diag.accounts[copyIndex()]]",
+                            "accountType": "[parameters('storage-settings').diag.accountType]"
                         }
                     }
                 }
@@ -355,20 +330,20 @@
             "apiVersion": "2016-09-01",
             "copy": {
                 "name": "storageLoop",
-                "count": "[length(parameters('storage-settings')[6].accounts)]"
+                "count": "[length(parameters('storage-settings').dc.accounts)]"
             },
             "dependsOn": [],
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[concat(variables('resourcesUrl'), '/storage-', parameters('storage-settings')[6].newOrExisting, '.template.json')]",
+                    "uri": "[concat(variables('resourcesUrl'), '/storage-', parameters('storage-settings').dc.newOrExisting, '.template.json')]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
                     "storage-settings": {
                         "value": {
-                            "name": "[parameters('storage-settings')[6].accounts[copyIndex()]]",
-                            "accountType": "[parameters('storage-settings')[6].accountType]"
+                            "name": "[parameters('storage-settings').dc.accounts[copyIndex()]]",
+                            "accountType": "[parameters('storage-settings').dc.accountType]"
                         }
                     }
                 }
