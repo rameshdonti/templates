@@ -260,7 +260,7 @@
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2016-09-01",
             "dependsOn": [
-                "[resourceId('Microsoft.Resources/deployments', 'puplicIp')]"
+                "[resourceId('Microsoft.Resources/deployments', 'publicIp')]"
             ],
             "properties": {
                 "mode": "Incremental",
@@ -682,7 +682,7 @@
             "apiVersion": "2016-09-01",
             "dependsOn": [
                 "[resourceId('Microsoft.Resources/deployments', 'virtualNetwork')]",
-                "[resourceId('Microsoft.Resources/deployments', 'puplicIp')]",
+                "[resourceId('Microsoft.Resources/deployments', 'publicIp')]",
                 "[resourceId('Microsoft.Resources/deployments', 'networkSecurityGroups')]"
             ],
             "properties": {
