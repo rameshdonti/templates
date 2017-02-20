@@ -703,7 +703,7 @@
                                         "properties": {
                                             "privateIPAllocationMethod": "Dynamic",
                                             "subnet": {
-                                                "id": "[concat(reference('sharedResources').outputs.vnetID.value, '/subnets/', parameters('vnet-settings').subnets.subnet0Name)]"
+                                                "id": "[concat(reference('virtualNetwork').outputs.vnetID.value, '/subnets/', parameters('vnet-settings').subnets.subnet0Name)]"
                                             },
                                             "loadBalancerInboundNatRules": [
                                                 {
@@ -730,7 +730,7 @@
                                         "properties": {
                                             "privateIPAllocationMethod": "Dynamic",
                                             "subnet": {
-                                                "id": "[concat(reference('sharedResources').outputs.vnetID.value, '/subnets/', parameters('vnet-settings').subnets.subnet1Name)]"
+                                                "id": "[concat(reference('virtualNetwork').outputs.vnetID.value, '/subnets/', parameters('vnet-settings').subnets.subnet1Name)]"
                                             },
                                             "loadBalancerBackendAddressPools": [
                                                 {
@@ -757,7 +757,7 @@
                                         "properties": {
                                             "privateIPAllocationMethod": "Dynamic",
                                             "subnet": {
-                                                "id": "[concat(reference('sharedResources').outputs.vnetID.value, '/subnets/', parameters('vnet-settings').subnets.subnet2Name)]"
+                                                "id": "[concat(reference('virtualNetwork').outputs.vnetID.value, '/subnets/', parameters('vnet-settings').subnets.subnet2Name)]"
                                             }
                                         }
                                     }
@@ -779,7 +779,7 @@
                                         "properties": {
                                             "privateIPAllocationMethod": "Dynamic",
                                             "subnet": {
-                                                "id": "[concat(reference('sharedResources').outputs.vnetID.value, '/subnets/', parameters('vnet-settings').subnets.subnet3Name)]"
+                                                "id": "[concat(reference('virtualNetwork').outputs.vnetID.value, '/subnets/', parameters('vnet-settings').subnets.subnet3Name)]"
                                             }
                                         }
                                     }
@@ -801,7 +801,7 @@
                                         "properties": {
                                             "privateIPAllocationMethod": "Dynamic",
                                             "subnet": {
-                                                "id": "[concat(reference('sharedResources').outputs.vnetID.value, '/subnets/', parameters('vnet-settings').subnets.subnet4Name)]"
+                                                "id": "[concat(reference('virtualNetwork').outputs.vnetID.value, '/subnets/', parameters('vnet-settings').subnets.subnet4Name)]"
                                             }
                                         }
                                     }
@@ -823,7 +823,7 @@
                                         "properties": {
                                             "privateIPAllocationMethod": "Dynamic",
                                             "subnet": {
-                                                "id": "[concat(reference('sharedResources').outputs.vnetID.value, '/subnets/', parameters('vnet-settings').subnets.subnet3Name)]"
+                                                "id": "[concat(reference('virtualNetwork').outputs.vnetID.value, '/subnets/', parameters('vnet-settings').subnets.subnet3Name)]"
                                             }
                                         }
                                     }
