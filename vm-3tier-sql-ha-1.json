@@ -57,15 +57,16 @@
         "resourcesFolder": "resources/feature-pattern-3",
         "dscScriptsUrl": "[concat(parameters('baseUrl'), variables('dscScriptsFolder'))]",
         "resourcesUrl": "[concat(parameters('baseUrl'), variables('resourcesFolder'))]",
-        "avsTemplate": "[concat(variables('resourcesUrl'), '/', 'vm-3tier-sql-ha-1-avs.json')]",
-        "diagTemplate": "[concat(variables('resourcesUrl'), '/', 'extn-diag.template.json')]",
+        "avsTemplate": "\"[concat(parameters('baseUrl'), 'vm-3tier-sql-ha-1-avs.json')],",
+        "lbTemplate": "[concat(parameters('baseUrl'), 'vm-3tier-sql-ha-1-lb.json')]",
+        "nicTemplate": "[concat(parameters('baseUrl'), 'vm-3tier-sql-ha-1-nic.json')]",
+        "nsgTemplate": "[concat(parameters('baseUrl'), 'vm-3tier-sql-ha-1-nsg.json')]",
+        "storageTemplate": "[concat(parameters('baseUrl'), '/vm-3tier-sql-ha-1-storage.json')]",
+        "vmTemplate": "[concat(parameters('baseUrl'), 'vm-3tier-sql-ha-1-vm.json')]",
+        "diagTemplate": "[concat(parameters('baseUrl'), 'extn-diag.template.json')]",
         "dscTemplate": "[concat(variables('resourcesUrl'), '/', 'extn-dsc.template.json')]",
-        "lbTemplate": "[concat(variables('resourcesUrl'), '/', 'vm-3tier-sql-ha-1-lb.json')]",
-        "nicTemplate": "[concat(variables('resourcesUrl'), '/', 'vm-3tier-sql-ha-1-nic.json')]",
-        "nsgTemplate": "[concat(variables('resourcesUrl'), '/', 'vm-3tier-sql-ha-1-nsg.json')]",
-        "scriptTemplate": "[concat(variables('resourcesUrl'), '/', 'extn-script.template.json')]",
         "pipTemplate": "[concat(variables('resourcesUrl'), '/pip-', parameters('pip-settings').newOrExisting, '.template.json')]",
-        "storageTemplate": "[concat(variables('resourcesUrl'), '/vm-3tier-sql-ha-1-storage.json')]",
+        "scriptTemplate": "[concat(variables('resourcesUrl'), '/', 'extn-script.template.json')]",
         "vnetTemplate": "[concat(variables('resourcesUrl'), '/vnet-', parameters('vnet-settings').newOrExisting, '.template.json')]",
         "dcCount": 2,
         "bizLbBackendPoolName": "bizLb-backEnd",
@@ -103,10 +104,7 @@
         "vmDscScript": [
             [ "dsc-iis", "Microsoft.Powershell", "DSC", "2.9", "[variables('dscTemplate')]", "[variables('dscScriptsUrl')]", "iis-on-windows-vm", "iis-config-dsc", "Main" ],
             [ "script-apache", "Microsoft.Azure.Extensions", "CustomScript", "2.0", "[variables('scriptTemplate')]", "[variables('dscScriptsUrl')]", "apache2-on-ubuntu-vm", "install_apache.sh", null ]
-        ],
-        "vmTemplate": "[concat(variables('resourcesUrl'), '/vm-', variables('vmOS')[parameters('vm-settings').type][3], '.template.json')]"
-
-
+        ]
     },
     "resources": [
         {
