@@ -1,0 +1,152 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "avs-settings": {
+            "type": "string",
+            "metadata": {
+                "description": "These are settings for the Availability Sets"
+            }
+        },
+        "baseUrl": {
+            "type": "string",
+            "metadata": {
+                "description": "Base URL for Resource and Shared Templates"
+            }
+        }
+    },
+    "variables": {
+        "resourcesFolder": "resources/feature-pattern-3",
+        "resourcesUrl": "[concat(parameters('baseUrl'), variables('resourcesFolder'))]",
+        "avsTemplate": "[concat(variables('resourcesUrl'), '/', 'avs.template.json')]"
+    },
+    "resources": [
+        {
+            "name": "mgmtAvs",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2016-09-01",
+            "dependsOn": [],
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('avsTemplate')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "avs-settings": {
+                        "value": {
+                            "name": "[parameters('avs-settings').mgmt.name]",
+                            "updateCount": "[parameters('avs-settings').mgmt.updateCount]",
+                            "faultCount": "[parameters('avs-settings').mgmt.faultCount]"
+                        }
+                    },
+                    "resourcesUrl": {
+                        "value": "[variables('resourcesUrl')]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "webAvs",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2016-09-01",
+            "dependsOn": [],
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('avsTemplate')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "avs-settings": {
+                        "value": {
+                            "name": "[parameters('avs-settings').web.name]",
+                            "updateCount": "[parameters('avs-settings').web.updateCount]",
+                            "faultCount": "[parameters('avs-settings').web.faultCount]"
+                        }
+                    },
+                    "resourcesUrl": {
+                        "value": "[variables('resourcesUrl')]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "bizAvs",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2016-09-01",
+            "dependsOn": [],
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('avsTemplate')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "avs-settings": {
+                        "value": {
+                            "name": "[parameters('avs-settings').biz.name]",
+                            "updateCount": "[parameters('avs-settings').biz.updateCount]",
+                            "faultCount": "[parameters('avs-settings').biz.faultCount]"
+                        }
+                    },
+                    "resourcesUrl": {
+                        "value": "[variables('resourcesUrl')]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "sqlAvs",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2016-09-01",
+            "dependsOn": [],
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('avsTemplate')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "avs-settings": {
+                        "value": {
+                            "name": "[parameters('avs-settings').sql.name]",
+                            "updateCount": "[parameters('avs-settings').sql.updateCount]",
+                            "faultCount": "[parameters('avs-settings').sql.faultCount]"
+                        }
+                    },
+                    "resourcesUrl": {
+                        "value": "[variables('resourcesUrl')]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "dcAvs",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2016-09-01",
+            "dependsOn": [],
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('avsTemplate')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "avs-settings": {
+                        "value": {
+                            "name": "[parameters('avs-settings').dc.name]",
+                            "updateCount": "[parameters('avs-settings').dc.updateCount]",
+                            "faultCount": "[parameters('avs-settings').dc.faultCount]"
+                        }
+                    },
+                    "resourcesUrl": {
+                        "value": "[variables('resourcesUrl')]"
+                    }
+                }
+            }
+        }
+    ],
+    "outputs": {
+    }
+}
