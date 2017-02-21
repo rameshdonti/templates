@@ -77,6 +77,8 @@
         "extLbBackendPoolID": "[concat(variables('extLbID'),'/backendAddressPools/', variables('extLbBackendPoolName'))]",
         "extLbBackendPoolName": "extLb-backEnd-http",
         "extLbBackendPort": 3389,
+        "extLbFrontendPoolID": "[concat(variables('extLbID'),'/frontendIPConfigurations/lb-frontEnd')]",
+        "extLbFrontendPort": 5000,
         "extLbID": "[resourceId('Microsoft.Network/loadBalancers', variables('extLbName'))]",
         "extLbName": "ext-lb",
         "extLbProbeName": "http-probe",
@@ -302,12 +304,25 @@
                             "vmCount": "[parameters('vm-settings').count]"
                         }
                     },
+                    "inboundNat-settings": {
+                        "value": {
+                            "ext": {
+                                "name": "[concat(variables('extLbName'), '/', 'nat-rdp-vm')]",
+                                "count": 1,
+                                "lbName": "[variables('extLbName')]",
+                                "frontendPort": "[variables('extLbFrontendPort')]",
+                                "backendPort": "[variables('extLbBackendPort')]",
+                                "floatingIP": false,
+                                "protocol": "Tcp"
+                            }
+                        }
+                    },
                     "baseUrl": {
                         "value": "[parameters('baseUrl')]"
                     }
                 }
             }
-        },
+        },  
         {
             "name": "networkSecurityGroups",
             "type": "Microsoft.Resources/deployments",
