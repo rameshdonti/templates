@@ -327,8 +327,8 @@
                 },
                 "parameters": {
                     "nsg-settings": {
-                        "value": {
-                            "mgmt": {
+                        "mgmt": {
+                            "value": {
                                 "name": "mgmt-nsg",
                                 "securityRules": [
                                     {
@@ -358,8 +358,10 @@
                                         }
                                     }
                                 ]
-                            },
-                            "web": {
+                            }
+                        },
+                        "web": {
+                            "value": {
                                 "name": "web-nsg",
                                 "securityRules": [
                                     {
@@ -415,8 +417,10 @@
                                         }
                                     }
                                 ]
-                            },
-                            "biz": {
+                            }
+                        },
+                        "biz": {
+                            "value": {
                                 "name": "biz-nsg",
                                 "securityRules": [
                                     {
@@ -459,8 +463,10 @@
                                         }
                                     }
                                 ]
-                            },
-                            "sql": {
+                            }
+                        },
+                        "sql": {
+                            "value": {
                                 "name": "sql-nsg",
                                 "securityRules": [
                                     {
@@ -503,8 +509,10 @@
                                         }
                                     }
                                 ]
-                            },
-                            "dc": {
+                            }
+                        },
+                        "dc": {
+                            "value": {
                                 "name": "dc-nsg",
                                 "securityRules": [
                                     {
