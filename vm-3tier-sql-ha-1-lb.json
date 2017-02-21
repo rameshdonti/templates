@@ -54,9 +54,7 @@
             "name": "externalLoadBalancer",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2016-09-01",
-            "dependsOn": [
-                "[resourceId('Microsoft.Resources/deployments', 'publicIp')]"
-            ],
+            "dependsOn": [],
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
@@ -75,7 +73,7 @@
                                     "properties": {
                                         "privateIPAllocationMethod": "Dynamic",
                                         "publicIPAddress": {
-                                            "id": "[reference('publicIp').outputs.pipID.value]"
+                                            "id": "[parameters('lb-settings').pipID]"
                                         }
                                     }
                                 }
