@@ -311,6 +311,7 @@
                                 "count": 1,
                                 "lbName": "[variables('extLbName')]",
                                 "frontendPort": "[variables('extLbFrontendPort')]",
+                                "frontendPoolID": "[variables('extLbFrontendPoolID')]",
                                 "backendPort": "[variables('extLbBackendPort')]",
                                 "floatingIP": false,
                                 "protocol": "Tcp"
