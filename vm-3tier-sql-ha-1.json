@@ -198,28 +198,36 @@
                 },
                 "parameters": {
                     "avs-settings": {
-                        "value": {
-                            "mgmt": {
+                        "mgmt": {
+                            "value": {
                                 "name": "mgmt-avs",
                                 "updateCount": 5,
                                 "faultCount": 3
-                            },
-                            "web": {
+                            }
+                        },
+                        "web": {
+                            "value": {
                                 "name": "web-avs",
                                 "updateCount": 5,
                                 "faultCount": 3
-                            },
-                            "biz": {
+                            }
+                        },
+                        "biz": {
+                            "value": {
                                 "name": "biz-avs",
                                 "updateCount": 5,
                                 "faultCount": 3
-                            },
-                            "sql": {
+                            }
+                        },
+                        "sql": {
+                            "value": {
                                 "name": "sql-avs",
                                 "updateCount": 5,
                                 "faultCount": 3
-                            },
-                            "dc": {
+                            }
+                        },
+                        "dc": {
+                            "value": {
                                 "name": "dc-avs",
                                 "updateCount": 5,
                                 "faultCount": 3
