@@ -307,7 +307,7 @@
                     "inboundNat-settings": {
                         "value": {
                             "ext": {
-                                "name": "[concat(variables('extLbName'), '/', 'nat-rdp-vm')]",
+                                "name": "[concat(variables('extLbName'), '/', 'nat-rdp-mgmt')]",
                                 "count": 1,
                                 "lbName": "[variables('extLbName')]",
                                 "frontendPort": "[variables('extLbFrontendPort')]",
