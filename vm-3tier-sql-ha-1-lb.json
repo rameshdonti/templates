@@ -148,12 +148,12 @@
                 "parameters": {
                     "inboundNat-settings": {
                         "value": {
-                            "name": "[parameters('inboundNat-settings').name]",
+                            "name": "[parameters('inboundNat-settings').ext.name]",
                             "count": "[parameters('inboundNat-settings').count]",
-                            "backendPort": "[parameters('inboundNat-settings').backendPort]",
-                            "frontendPoolID": "[parameters('inboundNat-settings').frontendPoolID]",
-                            "frontendPort": "[parameters('inboundNat-settings').frontendPort]",
-                            "protocol": "[parameters('inboundNat-settings').protocol]"
+                            "backendPort": "[parameters('inboundNat-settings').ext.backendPort]",
+                            "frontendPoolID": "[parameters('inboundNat-settings').ext.frontendPoolID]",
+                            "frontendPort": "[parameters('inboundNat-settings').ext.frontendPort]",
+                            "protocol": "[parameters('inboundNat-settings').ext.protocol]"
 
                         }    
                     }
