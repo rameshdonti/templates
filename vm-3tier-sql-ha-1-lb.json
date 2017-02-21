@@ -188,7 +188,6 @@
                                     "properties": {
                                         "protocol": "Tcp",
                                         "port": "[variables('bizLbPort')]",
-                                        "requestPath": "/",
                                         "intervalInSeconds": 5,
                                         "numberOfProbes": 2
                                     }
@@ -265,7 +264,6 @@
                                     "properties": {
                                         "protocol": "Tcp",
                                         "port": "[variables('sqlLbPort')]",
-                                        "requestPath": "/",
                                         "intervalInSeconds": 5,
                                         "numberOfProbes": 2
                                     }
