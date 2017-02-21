@@ -40,7 +40,7 @@
             }
         },
         {
-            "name": "webNic",
+            "name": "[concat('webNic', copyIndex())]",
             "copy": {
                 "name": "webNicLoop",
                 "count": "[parameters('nic-settings').web.count]"
@@ -68,7 +68,7 @@
             }
         },
         {
-            "name": "bizNic",
+            "name": "[concat('bizNic', copyIndex())]",
             "copy": {
                 "name": "bizNicLoop",
                 "count": "[parameters('nic-settings').biz.count]"
@@ -96,7 +96,7 @@
             }
         },
         {
-            "name": "sqlNic",
+            "name": "[concat('sqlNic', copyIndex())]",
             "copy": {
                 "name": "sqlNicLoop",
                 "count": "[parameters('nic-settings').sql.count]"
@@ -124,7 +124,7 @@
             }
         },
         {
-            "name": "dcNic",
+            "name": "[concat('dcNic', copyIndex())]",
             "copy": {
                 "name": "dcNicLoop",
                 "count": "[parameters('nic-settings').dc.count]"
