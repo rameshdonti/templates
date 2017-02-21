@@ -277,34 +277,36 @@
                 },
                 "parameters": {
                     "lb-settings": {
-                        "dnsName": "[parameters('lb-settings').publicIPDnsName]",
-                        "ext": {
-                            "name": "[variables('extLbName')]",
-                            "backendPoolName": "[variables('extLbBackendPoolName')]",
-                            "backendPort": "[variables('extLbBackendPort')]",
-                            "probeName": "[variables('extLbProbeName')]",
-                            "ruleName": "[variables('extLbRuleName')]"
-                        },
-                        "biz": {
-                            "name": "[variables('bizLbName')]",
-                            "backendPoolName": "[variables('bizLbBackendPoolName')]",
-                            "ipAddress": "[parameters('lb-settings').biz.ipAddress]",
-                            "internalPorts": "[parameters('lb-settings').biz.internalPorts]",
-                            "probeName": "[variables('bizLbProbeName')]",
-                            "ruleName": "[variables('bizLbRuleName')]"
-                        },
-                        "sql": {
-                            "name": "[variables('sqlLbName')]",
-                            "backendPoolName": "[variables('sqlLbBackendPoolName')]",
-                            "ipAddress": "[parameters('lb-settings').sql.ipAddress]",
-                            "internalPorts": "[parameters('lb-settings').sql.internalPorts]",
-                            "probeName": "[variables('sqlLbProbeName')]",
-                            "ruleName": "[variables('sqlLbRuleName')]"
-                        },
-                        "newOrExisting": "new",
-                        "existingRg": null,
-                        "sqlCount": "[parameters('sql-settings').count]",
-                        "vmCount": "[parameters('vm-settings').count]"
+                        "value": {
+                            "dnsName": "[parameters('lb-settings').publicIPDnsName]",
+                            "ext": {
+                                "name": "[variables('extLbName')]",
+                                "backendPoolName": "[variables('extLbBackendPoolName')]",
+                                "backendPort": "[variables('extLbBackendPort')]",
+                                "probeName": "[variables('extLbProbeName')]",
+                                "ruleName": "[variables('extLbRuleName')]"
+                            },
+                            "biz": {
+                                "name": "[variables('bizLbName')]",
+                                "backendPoolName": "[variables('bizLbBackendPoolName')]",
+                                "ipAddress": "[parameters('lb-settings').biz.ipAddress]",
+                                "internalPorts": "[parameters('lb-settings').biz.internalPorts]",
+                                "probeName": "[variables('bizLbProbeName')]",
+                                "ruleName": "[variables('bizLbRuleName')]"
+                            },
+                            "sql": {
+                                "name": "[variables('sqlLbName')]",
+                                "backendPoolName": "[variables('sqlLbBackendPoolName')]",
+                                "ipAddress": "[parameters('lb-settings').sql.ipAddress]",
+                                "internalPorts": "[parameters('lb-settings').sql.internalPorts]",
+                                "probeName": "[variables('sqlLbProbeName')]",
+                                "ruleName": "[variables('sqlLbRuleName')]"
+                            },
+                            "newOrExisting": "new",
+                            "existingRg": null,
+                            "sqlCount": "[parameters('sql-settings').count]",
+                            "vmCount": "[parameters('vm-settings').count]"
+                        }
                     },
                     "baseUrl": {
                         "value": "[parameters('baseUrl')]"
