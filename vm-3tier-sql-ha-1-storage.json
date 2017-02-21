@@ -39,7 +39,8 @@
                     "storage-settings": {
                         "value": {
                             "name": "[parameters('storage-settings').mgmt.accounts[copyIndex()]]",
-                            "accountType": "[parameters('storage-settings').mgmt.accountType]"
+                            "accountType": "[parameters('storage-settings').mgmt.accountType]",
+                            "existingRg": "[parameters('storage-settings').mgmt.existingRg]"
                         }
                     }
                 }
@@ -65,7 +66,8 @@
                     "storage-settings": {
                         "value": {
                             "name": "[parameters('storage-settings').web.accounts[copyIndex()]]",
-                            "accountType": "[parameters('storage-settings').web.accountType]"
+                            "accountType": "[parameters('storage-settings').web.accountType]",
+                            "existingRg": "[parameters('storage-settings').web.existingRg]"
                         }
                     }
                 }
@@ -91,7 +93,8 @@
                     "storage-settings": {
                         "value": {
                             "name": "[parameters('storage-settings').biz.accounts[copyIndex()]]",
-                            "accountType": "[parameters('storage-settings').biz.accountType]"
+                            "accountType": "[parameters('storage-settings').biz.accountType]",
+                            "existingRg": "[parameters('storage-settings').biz.existingRg]"
                         }
                     }
                 }
@@ -117,7 +120,8 @@
                     "storage-settings": {
                         "value": {
                             "name": "[parameters('storage-settings').sql.accounts[copyIndex()]]",
-                            "accountType": "[parameters('storage-settings').sql.accountType]"
+                            "accountType": "[parameters('storage-settings').sql.accountType]",
+                            "existingRg": "[parameters('storage-settings').sql.existingRg]"
                         }
                     }
                 }
@@ -143,7 +147,8 @@
                     "storage-settings": {
                         "value": {
                             "name": "[parameters('storage-settings').fsw.accounts[copyIndex()]]",
-                            "accountType": "[parameters('storage-settings').fsw.accountType]"
+                            "accountType": "[parameters('storage-settings').fsw.accountType]",
+                            "existingRg": "[parameters('storage-settings').fsw.existingRg]"
                         }
                     }
                 }
@@ -169,7 +174,8 @@
                     "storage-settings": {
                         "value": {
                             "name": "[parameters('storage-settings').diag.accounts[copyIndex()]]",
-                            "accountType": "[parameters('storage-settings').diag.accountType]"
+                            "accountType": "[parameters('storage-settings').diag.accountType]",
+                            "existingRg": "[parameters('storage-settings').diag.existingRg]"
                         }
                     }
                 }
@@ -195,7 +201,8 @@
                     "storage-settings": {
                         "value": {
                             "name": "[parameters('storage-settings').dc.accounts[copyIndex()]]",
-                            "accountType": "[parameters('storage-settings').dc.accountType]"
+                            "accountType": "[parameters('storage-settings').dc.accountType]",
+                            "existingRg": "[parameters('storage-settings').dc.existingRg]"
                         }
                     }
                 }
