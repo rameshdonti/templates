@@ -40,7 +40,7 @@
         "bizLbRuleName": "[parameters('lb-settings').biz.ruleName]",
         "sqlLbBackendPoolID": "[concat(variables('sqlLbID'),'/backendAddressPools/', variables('sqlLbBackendPoolName'))]",
         "sqlLbBackendPoolName": "[parameters('lb-settings').sql.backendPoolName]",
-        "sqlLbFrontendIP": "[parameters('lb-settings').internalIPAddresses[1]]",
+        "sqlLbFrontendIP": "[parameters('lb-settings').sql.ipAddress]",
         "sqlLbFrontendPoolID": "[concat(variables('sqlLbID'),'/frontendIPConfigurations/lb-frontEnd')]",
         "sqlLbID": "[resourceId('Microsoft.Network/loadBalancers', variables('sqlLbName'))]",
         "sqlLbName": "[parameters('lb-settings').sql.name]",
