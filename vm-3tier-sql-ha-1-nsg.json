@@ -35,9 +35,6 @@
                 "parameters": {
                     "nsg-settings": {
                         "value": "[parameters('nsg-settings').mgmt]"
-                    },
-                    "resourcesUrl": {
-                        "value": "[variables('resourcesUrl')]"
                     }
                 }
             }
@@ -56,9 +53,6 @@
                 "parameters": {
                     "nsg-settings": {
                         "value": "[parameters('nsg-settings').web]"
-                    },
-                    "resourcesUrl": {
-                        "value": "[variables('resourcesUrl')]"
                     }
                 }
             }
@@ -77,9 +71,6 @@
                 "parameters": {
                     "nsg-settings": {
                         "value": "[parameters('nsg-settings').biz]"
-                    },
-                    "resourcesUrl": {
-                        "value": "[variables('resourcesUrl')]"
                     }
                 }
             }
@@ -98,9 +89,6 @@
                 "parameters": {
                     "nsg-settings": {
                         "value": "[parameters('nsg-settings').sql]"
-                    },
-                    "resourcesUrl": {
-                        "value": "[variables('resourcesUrl')]"
                     }
                 }
             }
@@ -119,9 +107,6 @@
                 "parameters": {
                     "nsg-settings": {
                         "value": "[parameters('nsg-settings').dc]"
-                    },
-                    "resourcesUrl": {
-                        "value": "[variables('resourcesUrl')]"
                     }
                 }
             }
