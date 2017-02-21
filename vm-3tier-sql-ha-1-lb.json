@@ -73,7 +73,7 @@
                                     "properties": {
                                         "privateIPAllocationMethod": "Dynamic",
                                         "publicIPAddress": {
-                                            "id": "[parameters('lb-settings').pipID]"
+                                            "id": "[parameters('lb-settings').ext.pipID]"
                                         }
                                     }
                                 }
@@ -148,7 +148,10 @@
                                     "name": "lb-frontEnd",
                                     "properties": {
                                         "privateIPAddress": "[variables('bizLbFrontendIP')]",
-                                        "privateIPAllocationMethod": "static"
+                                        "privateIPAllocationMethod": "static",
+                                        "subnet": {
+                                            "id": "[parameters('lb-settings').biz.subnet]"
+                                        }
                                     }
                                 }
                             ],
@@ -222,7 +225,10 @@
                                     "name": "lb-frontEnd",
                                     "properties": {
                                         "privateIPAddress": "[variables('sqlLbFrontendIP')]",
-                                        "privateIPAllocationMethod": "static"
+                                        "privateIPAllocationMethod": "static",
+                                        "subnet": {
+                                            "id": "[parameters('lb-settings').sql.subnet]"
+                                        }
                                     }
                                 }
                             ],
