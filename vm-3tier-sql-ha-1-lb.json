@@ -8,6 +8,12 @@
                 "description": "These are settings for the load balancers"
             }
         },
+        "inboundNat-settings": {
+            "type": "object",
+            "metadata": {
+                "description": "These are settings for the Inbound NAT Rules"
+            }
+        },
         "baseUrl": {
             "type": "string",
             "metadata": {
@@ -19,6 +25,7 @@
         "resourcesFolder": "resources/feature-pattern-3",
         "resourcesUrl": "[concat(parameters('baseUrl'), variables('resourcesFolder'))]",
         "lbTemplate": "[concat(variables('resourcesUrl'), '/', 'lb.template.json')]",
+        "inboundNatTemplate": "[concat(variables('resourcesUrl'), '/', 'inboundNat.template.json')]",
         "extLbBackendPoolID": "[concat(variables('extLbID'),'/backendAddressPools/', variables('extLbBackendPoolName'))]",
         "extLbBackendPoolName": "[parameters('lb-settings').ext.backendPoolName]",
         "extLbBackendPort": "[parameters('lb-settings').ext.backendPort]",
@@ -121,6 +128,34 @@
                             "outboundNatRules": [],
                             "inboundNatPools": []
                         }
+                    }
+                }
+            }
+        },
+        {
+            "name": "externalInboundNatRules",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2016-09-01",
+            "dependsOn": [
+                "[resourceId('Microsoft.Resources/deployments', 'externalLoadBalancer')]"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('inboundNatTemplate')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "inboundNat-settings": {
+                        "value": {
+                            "name": "[parameters('inboundNat-settings').name]",
+                            "count": "[parameters('inboundNat-settings').count]",
+                            "backendPort": "[parameters('inboundNat-settings').backendPort]",
+                            "frontendPoolID": "[parameters('inboundNat-settings').frontendPoolID]",
+                            "frontendPort": "[parameters('inboundNat-settings').frontendPort]",
+                            "protocol": "[parameters('inboundNat-settings').protocol]"
+
+                        }    
                     }
                 }
             }
