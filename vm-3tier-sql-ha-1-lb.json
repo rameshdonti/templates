@@ -153,8 +153,8 @@
                             "backendPort": "[parameters('inboundNat-settings').ext.backendPort]",
                             "frontendPoolID": "[parameters('inboundNat-settings').ext.frontendPoolID]",
                             "frontendPort": "[parameters('inboundNat-settings').ext.frontendPort]",
-                            "protocol": "[parameters('inboundNat-settings').ext.protocol]"
-
+                            "protocol": "[parameters('inboundNat-settings').ext.protocol]",
+                            "floatingIP": "[parameters('inboundNat-settings').ext.floatingIP]"
                         }    
                     }
                 }
