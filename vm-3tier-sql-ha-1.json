@@ -269,7 +269,7 @@
                 "parameters": {
                     "lb-settings": {
                         "value": {
-                            "dnsName": "[parameters('lb-settings').publicIPDnsName]",
+                            "dnsName": "[parameters('lb-settings').dnsName]",
                             "ext": {
                                 "name": "[variables('extLbName')]",
                                 "backendPoolName": "[variables('extLbBackendPoolName')]",
