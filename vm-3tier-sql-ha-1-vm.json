@@ -2,6 +2,12 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
+        "storage-settings": {
+            "type": "string",
+            "metadata": {
+                "description": "These are settings for the Storage Accounts"
+            }
+        },
         "vm-settings": {
             "type": "string",
             "metadata": {
@@ -34,7 +40,7 @@
                 },
                 "parameters": {
                     "storage-settings": {
-                        "value": "[parameters('vm-settings').mgmt.storage]"
+                        "value": "[parameters('storage-settings').mgmt]"
                     },
                     "vm-settings": {
                         "value": {
@@ -70,7 +76,7 @@
                 },
                 "parameters": {
                     "storage-settings": {
-                        "value": "[parameters('vm-settings').mgmt.storage]"
+                        "value": "[parameters('storage-settings').web]"
                     },
                     "vm-settings": {
                         "value": {
@@ -106,7 +112,7 @@
                 },
                 "parameters": {
                     "storage-settings": {
-                        "value": "[parameters('vm-settings').biz.storage]"
+                        "value": "[parameters('storage-settings').biz]"
                     },
                     "vm-settings": {
                         "value": {
@@ -142,7 +148,7 @@
                 },
                 "parameters": {
                     "storage-settings": {
-                        "value": "[parameters('vm-settings').sql.storage]"
+                        "value": "[parameters('storage-settings').sql]"
                     },
                     "vm-settings": {
                         "value": {
@@ -178,7 +184,7 @@
                 },
                 "parameters": {
                     "storage-settings": {
-                        "value": "[parameters('vm-settings').dc.storage]"
+                        "value": "[parameters('storage-settings').dc]"
                     },
                     "vm-settings": {
                         "value": {
@@ -210,7 +216,7 @@
                 },
                 "parameters": {
                     "storage-settings": {
-                        "value": "[parameters('vm-settings').fsw.storage]"
+                        "value": "[parameters('storage-settings').fsw]"
                     },
                     "vm-settings": {
                         "value": {
