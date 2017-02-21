@@ -3,7 +3,7 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "nic-settings": {
-            "type": "string",
+            "type": "object",
             "metadata": {
                 "description": "These are settings for the Network Interfaces"
             }
