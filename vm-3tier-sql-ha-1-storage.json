@@ -54,7 +54,6 @@
                 "count": "[length(parameters('storage-settings').web.accounts)]"
             },
             "dependsOn": [
-                "[resourceId('Microsoft.Resources/deployments', 'sharedResources')]"
             ],
             "properties": {
                 "mode": "Incremental",
@@ -81,7 +80,6 @@
                 "count": "[length(parameters('storage-settings').biz.accounts)]"
             },
             "dependsOn": [
-                "[resourceId('Microsoft.Resources/deployments', 'sharedResources')]"
             ],
             "properties": {
                 "mode": "Incremental",
@@ -108,7 +106,6 @@
                 "count": "[length(parameters('storage-settings').sql.accounts)]"
             },
             "dependsOn": [
-                "[resourceId('Microsoft.Resources/deployments', 'sharedResources')]"
             ],
             "properties": {
                 "mode": "Incremental",
@@ -135,7 +132,6 @@
                 "count": "[length(parameters('storage-settings').fsw.accounts)]"
             },
             "dependsOn": [
-                "[resourceId('Microsoft.Resources/deployments', 'sharedResources')]"
             ],
             "properties": {
                 "mode": "Incremental",
@@ -162,7 +158,6 @@
                 "count": "[length(parameters('storage-settings').diag.accounts)]"
             },
             "dependsOn": [
-                "[resourceId('Microsoft.Resources/deployments', 'sharedResources')]"
             ],
             "properties": {
                 "mode": "Incremental",
@@ -189,7 +184,6 @@
                 "count": "[length(parameters('storage-settings').dc.accounts)]"
             },
             "dependsOn": [
-                "[resourceId('Microsoft.Resources/deployments', 'sharedResources')]"
             ],
             "properties": {
                 "mode": "Incremental",
