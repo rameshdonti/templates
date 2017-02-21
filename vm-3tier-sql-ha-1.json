@@ -32,17 +32,16 @@
                 "description": "These are settings for the Virtual Machine"
             }
         },
-        "dc-settings": {
-            "type": "object",
-            "metadata": {
-                "description": "These are settings for Domain Controllers"
-            }
-        },
-
         "sql-settings": {
             "type": "object",
             "metadata": {
                 "description": "These are settings for the Storage Account"
+            }
+        },
+        "dc-settings": {
+            "type": "object",
+            "metadata": {
+                "description": "These are settings for Domain Controllers"
             }
         },
         "baseUrl": {
@@ -198,36 +197,28 @@
                 },
                 "parameters": {
                     "avs-settings": {
-                        "mgmt": {
-                            "value": {
+                        "value": {
+                            "mgmt": {
                                 "name": "mgmt-avs",
                                 "updateCount": 5,
                                 "faultCount": 3
-                            }
-                        },
-                        "web": {
-                            "value": {
+                            },
+                            "web": {
                                 "name": "web-avs",
                                 "updateCount": 5,
                                 "faultCount": 3
-                            }
-                        },
-                        "biz": {
-                            "value": {
+                            },
+                            "biz": {
                                 "name": "biz-avs",
                                 "updateCount": 5,
                                 "faultCount": 3
-                            }
-                        },
-                        "sql": {
-                            "value": {
+                            },
+                            "sql": {
                                 "name": "sql-avs",
                                 "updateCount": 5,
                                 "faultCount": 3
-                            }
-                        },
-                        "dc": {
-                            "value": {
+                            },
+                            "dc": {
                                 "name": "dc-avs",
                                 "updateCount": 5,
                                 "faultCount": 3
