@@ -327,8 +327,8 @@
                 },
                 "parameters": {
                     "nsg-settings": {
-                        "mgmt": {
-                            "value": {
+                        "value": {
+                            "mgmt": {
                                 "name": "mgmt-nsg",
                                 "securityRules": [
                                     {
@@ -358,10 +358,8 @@
                                         }
                                     }
                                 ]
-                            }
-                        },
-                        "web": {
-                            "value": {
+                            },
+                            "web": {
                                 "name": "web-nsg",
                                 "securityRules": [
                                     {
@@ -417,10 +415,8 @@
                                         }
                                     }
                                 ]
-                            }
-                        },
-                        "biz": {
-                            "value": {
+                            },
+                            "biz": {
                                 "name": "biz-nsg",
                                 "securityRules": [
                                     {
@@ -463,10 +459,8 @@
                                         }
                                     }
                                 ]
-                            }
-                        },
-                        "sql": {
-                            "value": {
+                            },
+                            "sql": {
                                 "name": "sql-nsg",
                                 "securityRules": [
                                     {
@@ -509,10 +503,8 @@
                                         }
                                     }
                                 ]
-                            }
-                        },
-                        "dc": {
-                            "value": {
+                            },
+                            "dc": {
                                 "name": "dc-nsg",
                                 "securityRules": [
                                     {
@@ -878,48 +870,38 @@
                 },
                 "parameters": {
                     "storage-settings": {
-                        "mgmt": {
-                            "value": {
+                        "value":  {
+                            "mgmt": {
                                 "name": "[parameters('storage-settings').mgmt.accounts[0]]",
                                 "accountType": "[parameters('storage-settings').mgmt.accountType]",
                                 "newOrExisting": "[parameters('storage-settings').mgmt.newOrExisting]",
                                 "existingRg": "[parameters('storage-settings').mgmt.existingRg]"
-                            }
-                        },
-                        "web": {
-                            "value": {
+                            },
+                            "web": {
                                 "name": "[parameters('storage-settings').web.accounts[variables('math').modulo2[copyIndex()]]]",
                                 "accountType": "[parameters('storage-settings').web.accountType]",
                                 "newOrExisting": "[parameters('storage-settings').web.newOrExisting]",
                                 "existingRg": "[parameters('storage-settings').web.existingRg]"
-                            }
-                        },
-                        "biz": {
-                            "value": {
+                            },
+                            "biz": {
                                 "name": "[parameters('storage-settings').biz.accounts[variables('math').modulo2[copyIndex()]]]",
                                 "accountType": "[parameters('storage-settings').biz.accountType]",
                                 "newOrExisting": "[parameters('storage-settings').biz.newOrExisting]",
                                 "existingRg": "[parameters('storage-settings').biz.existingRg]"
-                            }
-                        },
-                        "sql": {
-                            "value": {
+                            },
+                            "sql": {
                                 "name": "[parameters('storage-settings').sql.accounts[variables('math').modulo2[copyIndex()]]]",
                                 "accountType": "[parameters('storage-settings').sql.accountType]",
                                 "newOrExisting": "[parameters('storage-settings').sql.newOrExisting]",
                                 "existingRg": "[parameters('storage-settings').sql.existingRg]"
-                            }
-                        },
-                        "dc": {
-                            "value": {
+                            },
+                            "dc": {
                                 "name": "[parameters('storage-settings').dc.accounts[variables('math').modulo2[copyIndex()]]]",
                                 "accountType": "[parameters('storage-settings').dc.accountType]",
                                 "newOrExisting": "[parameters('storage-settings').dc.newOrExisting]",
                                 "existingRg": "[parameters('storage-settings').dc.existingRg]"
-                            }
-                        },
-                        "fsw": {
-                            "value": {
+                            },
+                            "fsw": {
                                 "name": "[parameters('storage-settings').fsw.accounts[0]]",
                                 "accountType": "[parameters('storage-settings').fsw.accountType]",
                                 "newOrExisting": "[parameters('storage-settings').fsw.newOrExisting]",
@@ -928,8 +910,8 @@
                         }
                     },
                     "vm-settings": {
-                        "mgmt": {
-                            "value": {
+                        "value": {
+                            "mgmt": {
                                 "name": "mgmt-vm",
                                 "adminUserName": "[parameters('vm-settings').adminUserName]",
                                 "adminPassword": "[parameters('vm-settings').adminPassword]",
@@ -940,10 +922,8 @@
                                 "nicName": "mgmt-nic",
                                 "vmSize": "Standard_D2_v2",
                                 "storageAccountContainerName": "[toLower(concat(resourceGroup().name, '-', uniqueString(resourceGroup().id, deployment().name)))]"
-                            }
-                        },
-                        "web": {
-                            "value": {
+                            },
+                            "web": {
                                 "name": "web-vm-",
                                 "count": "[parameters('vm-settings').count]",
                                 "adminUserName": "[parameters('vm-settings').adminUserName]",
@@ -955,10 +935,8 @@
                                 "nicName": "web-nic-",
                                 "vmSize": "Standard_D2_v2",
                                 "storageAccountContainerName": "[toLower(concat(resourceGroup().name, '-', uniqueString(resourceGroup().id, deployment().name)))]"
-                            }
-                        },
-                        "biz": {
-                            "value": {
+                            },
+                            "biz": {
                                 "name": "biz-vm-",
                                 "count": "[parameters('vm-settings').count]",
                                 "adminUserName": "[parameters('vm-settings').adminUserName]",
@@ -970,10 +948,8 @@
                                 "nicName": "biz-nic-",
                                 "vmSize": "Standard_D2_v2",
                                 "storageAccountContainerName": "[toLower(concat(resourceGroup().name, '-', uniqueString(resourceGroup().id, deployment().name)))]"
-                            }
-                        },
-                        "sql": {
-                            "value": {
+                            },
+                            "sql": {
                                 "name": "sql-vm-",
                                 "count": "[parameters('sql-settings').count]",
                                 "adminUserName": "[parameters('vm-settings').adminUserName]",
@@ -985,10 +961,8 @@
                                 "nicName": "sql-nic-",
                                 "vmSize": "Standard_DS4_v2",
                                 "storageAccountContainerName": "[toLower(concat(resourceGroup().name, '-', uniqueString(resourceGroup().id, deployment().name)))]"
-                            }
-                        },
-                        "dc": {
-                            "value": {
+                            },
+                            "dc": {
                                 "name": "dc-vm-",
                                 "adminUserName": "[parameters('vm-settings').adminUserName]",
                                 "adminPassword": "[parameters('vm-settings').adminPassword]",
@@ -999,10 +973,8 @@
                                 "nicName": "dc-nic-",
                                 "vmSize": "Standard_D2_v2",
                                 "storageAccountContainerName": "[toLower(concat(resourceGroup().name, '-', uniqueString(resourceGroup().id, deployment().name)))]"
-                            }
-                        },
-                        "fsw": {
-                            "value": {
+                            },
+                            "fsw": {
                                 "name": "fsw-vm",
                                 "adminUserName": "[parameters('vm-settings').adminUserName]",
                                 "adminPassword": "[parameters('vm-settings').adminPassword]",
