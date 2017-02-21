@@ -275,6 +275,7 @@
                                 "backendPoolName": "[variables('extLbBackendPoolName')]",
                                 "backendPort": "[variables('extLbBackendPort')]",
                                 "probeName": "[variables('extLbProbeName')]",
+                                "pipID": "[reference('publicIp').outputs.pipID.value]",
                                 "ruleName": "[variables('extLbRuleName')]"
                             },
                             "biz": {
