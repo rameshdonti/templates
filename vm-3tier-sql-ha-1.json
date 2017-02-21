@@ -123,8 +123,8 @@
                     "storage-settings": {
                         "value": "[parameters('storage-settings')]"
                     },
-                    "resourcesUrl": {
-                        "value": "[variables('resourcesUrl')]"
+                    "baseUrl": {
+                        "value": "[parameters('baseUrl')]"
                     }
                 }
             }
@@ -226,8 +226,8 @@
                             }
                         }
                     },
-                    "resourcesUrl": {
-                        "value": "[variables('resourcesUrl')]"
+                    "baseUrl": {
+                        "value": "[parameters('baseUrl')]"
                     }
                 }
             }
@@ -298,8 +298,8 @@
                         "sqlCount": "[parameters('sql-settings').count]",
                         "vmCount": "[parameters('vm-settings').count]"
                     },
-                    "resourcesUrl": {
-                        "value": "[variables('resourcesUrl')]"
+                    "baseUrl": {
+                        "value": "[parameters('baseUrl')]"
                     }
                 }
             }
@@ -671,6 +671,9 @@
                                 ]
                             }
                         }
+                    },
+                    "baseUrl": {
+                        "value": "[parameters('baseUrl')]"
                     }
                 }
             }
@@ -836,6 +839,9 @@
                                 }
                             }
                         }
+                    },
+                    "baseUrl": {
+                        "value": "[parameters('baseUrl')]"
                     }
                 }
             }
@@ -855,8 +861,8 @@
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
-                    "mgmt": {
-                        "storage": {
+                    "storage-settings": {
+                        "mgmt": {
                             "value": {
                                 "name": "[parameters('storage-settings').mgmt.accounts[0]]",
                                 "accountType": "[parameters('storage-settings').mgmt.accountType]",
@@ -864,7 +870,49 @@
                                 "existingRg": "[parameters('storage-settings').mgmt.existingRg]"
                             }
                         },
-                        "vm": {
+                        "web": {
+                            "value": {
+                                "name": "[parameters('storage-settings').web.accounts[variables('math').modulo2[copyIndex()]]]",
+                                "accountType": "[parameters('storage-settings').web.accountType]",
+                                "newOrExisting": "[parameters('storage-settings').web.newOrExisting]",
+                                "existingRg": "[parameters('storage-settings').web.existingRg]"
+                            }
+                        },
+                        "biz": {
+                            "value": {
+                                "name": "[parameters('storage-settings').biz.accounts[variables('math').modulo2[copyIndex()]]]",
+                                "accountType": "[parameters('storage-settings').biz.accountType]",
+                                "newOrExisting": "[parameters('storage-settings').biz.newOrExisting]",
+                                "existingRg": "[parameters('storage-settings').biz.existingRg]"
+                            }
+                        },
+                        "sql": {
+                            "value": {
+                                "name": "[parameters('storage-settings').sql.accounts[variables('math').modulo2[copyIndex()]]]",
+                                "accountType": "[parameters('storage-settings').sql.accountType]",
+                                "newOrExisting": "[parameters('storage-settings').sql.newOrExisting]",
+                                "existingRg": "[parameters('storage-settings').sql.existingRg]"
+                            }
+                        },
+                        "dc": {
+                            "value": {
+                                "name": "[parameters('storage-settings').dc.accounts[variables('math').modulo2[copyIndex()]]]",
+                                "accountType": "[parameters('storage-settings').dc.accountType]",
+                                "newOrExisting": "[parameters('storage-settings').dc.newOrExisting]",
+                                "existingRg": "[parameters('storage-settings').dc.existingRg]"
+                            }
+                        },
+                        "fsw": {
+                            "value": {
+                                "name": "[parameters('storage-settings').fsw.accounts[0]]",
+                                "accountType": "[parameters('storage-settings').fsw.accountType]",
+                                "newOrExisting": "[parameters('storage-settings').fsw.newOrExisting]",
+                                "existingRg": "[parameters('storage-settings').fsw.existingRg]"
+                            }
+                        }
+                    },
+                    "vm-settings": {
+                        "mgmt": {
                             "value": {
                                 "name": "mgmt-vm",
                                 "adminUserName": "[parameters('vm-settings').adminUserName]",
@@ -877,18 +925,8 @@
                                 "vmSize": "Standard_D2_v2",
                                 "storageAccountContainerName": "[toLower(concat(resourceGroup().name, '-', uniqueString(resourceGroup().id, deployment().name)))]"
                             }
-                        }
-                    },
-                    "web": {
-                        "storage": {
-                            "value": {
-                                "name": "[parameters('storage-settings').web.accounts[variables('math').modulo2[copyIndex()]]]",
-                                "accountType": "[parameters('storage-settings').web.accountType]",
-                                "newOrExisting": "[parameters('storage-settings').web.newOrExisting]",
-                                "existingRg": "[parameters('storage-settings').web.existingRg]"
-                            }
                         },
-                        "vm": {
+                        "web": {
                             "value": {
                                 "name": "web-vm-",
                                 "count": "[parameters('vm-settings').count]",
@@ -902,18 +940,8 @@
                                 "vmSize": "Standard_D2_v2",
                                 "storageAccountContainerName": "[toLower(concat(resourceGroup().name, '-', uniqueString(resourceGroup().id, deployment().name)))]"
                             }
-                        }
-                    },
-                    "biz": {
-                        "storage": {
-                            "value": {
-                                "name": "[parameters('storage-settings').biz.accounts[variables('math').modulo2[copyIndex()]]]",
-                                "accountType": "[parameters('storage-settings').biz.accountType]",
-                                "newOrExisting": "[parameters('storage-settings').biz.newOrExisting]",
-                                "existingRg": "[parameters('storage-settings').biz.existingRg]"
-                            }
                         },
-                        "vm": {
+                        "biz": {
                             "value": {
                                 "name": "biz-vm-",
                                 "count": "[parameters('vm-settings').count]",
@@ -927,18 +955,8 @@
                                 "vmSize": "Standard_D2_v2",
                                 "storageAccountContainerName": "[toLower(concat(resourceGroup().name, '-', uniqueString(resourceGroup().id, deployment().name)))]"
                             }
-                        }
-                    },
-                    "sql": {
-                        "storage": {
-                            "value": {
-                                "name": "[parameters('storage-settings').sql.accounts[variables('math').modulo2[copyIndex()]]]",
-                                "accountType": "[parameters('storage-settings').sql.accountType]",
-                                "newOrExisting": "[parameters('storage-settings').sql.newOrExisting]",
-                                "existingRg": "[parameters('storage-settings').sql.existingRg]"
-                            }
                         },
-                        "vm": {
+                        "sql": {
                             "value": {
                                 "name": "sql-vm-",
                                 "count": "[parameters('sql-settings').count]",
@@ -952,18 +970,8 @@
                                 "vmSize": "Standard_DS4_v2",
                                 "storageAccountContainerName": "[toLower(concat(resourceGroup().name, '-', uniqueString(resourceGroup().id, deployment().name)))]"
                             }
-                        }
-                    },
-                    "dc": {
-                        "storage": {
-                            "value": {
-                                "name": "[parameters('storage-settings').dc.accounts[variables('math').modulo2[copyIndex()]]]",
-                                "accountType": "[parameters('storage-settings').dc.accountType]",
-                                "newOrExisting": "[parameters('storage-settings').dc.newOrExisting]",
-                                "existingRg": "[parameters('storage-settings').dc.existingRg]"
-                            }
                         },
-                        "vm": {
+                        "dc": {
                             "value": {
                                 "name": "dc-vm-",
                                 "adminUserName": "[parameters('vm-settings').adminUserName]",
@@ -976,18 +984,8 @@
                                 "vmSize": "Standard_D2_v2",
                                 "storageAccountContainerName": "[toLower(concat(resourceGroup().name, '-', uniqueString(resourceGroup().id, deployment().name)))]"
                             }
-                        }
-                    },
-                    "fsw": {
-                        "storage": {
-                            "value": {
-                                "name": "[parameters('storage-settings').fsw.accounts[0]]",
-                                "accountType": "[parameters('storage-settings').fsw.accountType]",
-                                "newOrExisting": "[parameters('storage-settings').fsw.newOrExisting]",
-                                "existingRg": "[parameters('storage-settings').fsw.existingRg]"
-                            }
                         },
-                        "vm": {
+                        "fsw": {
                             "value": {
                                 "name": "fsw-vm",
                                 "adminUserName": "[parameters('vm-settings').adminUserName]",
@@ -996,11 +994,14 @@
                                 "imagePublisher": "[variables('vmOS')[parameters('vm-settings').type][0]]",
                                 "imageOffer": "[variables('vmOS')[parameters('vm-settings').type][1]]",
                                 "imageSku": "[variables('vmOS')[parameters('vm-settings').type][2]]",
-                                "nicName":  "fsw-nic",
+                                "nicName": "fsw-nic",
                                 "vmSize": "Standard_D2_v2",
                                 "storageAccountContainerName": "[toLower(concat(resourceGroup().name, '-', uniqueString(resourceGroup().id, deployment().name)))]"
                             }
                         }
+                    },
+                    "baseUrl": {
+                        "value": "[parameters('baseUrl')]"
                     }
                 }
             }
