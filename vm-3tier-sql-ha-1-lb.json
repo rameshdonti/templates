@@ -25,7 +25,7 @@
         "resourcesFolder": "resources/feature-pattern-3",
         "resourcesUrl": "[concat(parameters('baseUrl'), variables('resourcesFolder'))]",
         "lbTemplate": "[concat(variables('resourcesUrl'), '/', 'lb.template.json')]",
-        "inboundNatTemplate": "[concat(variables('resourcesUrl'), '/', 'inboundNat.template.json')]",
+        "inboundNatTemplate": "[concat(variables('resourcesUrl'), '/', 'inbound-nat.template.json')]",
         "extLbBackendPoolID": "[concat(variables('extLbID'),'/backendAddressPools/', variables('extLbBackendPoolName'))]",
         "extLbBackendPoolName": "[parameters('lb-settings').ext.backendPoolName]",
         "extLbBackendPort": "[parameters('lb-settings').ext.backendPort]",
