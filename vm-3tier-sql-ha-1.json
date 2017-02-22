@@ -883,48 +883,19 @@
                 "parameters": {
                     "storage-settings": {
                         "value":  {
-                            "mgmt": {
-                                "name": "[parameters('storage-settings').mgmt.accounts[0]]",
-                                "accountType": "[parameters('storage-settings').mgmt.accountType]",
-                                "newOrExisting": "[parameters('storage-settings').mgmt.newOrExisting]",
-                                "existingRg": "[parameters('storage-settings').mgmt.existingRg]"
-                            },
-                            "web": {
-                                "name": "[parameters('storage-settings').web.accounts[variables('math').modulo2[copyIndex()]]]",
-                                "accountType": "[parameters('storage-settings').web.accountType]",
-                                "newOrExisting": "[parameters('storage-settings').web.newOrExisting]",
-                                "existingRg": "[parameters('storage-settings').web.existingRg]"
-                            },
-                            "biz": {
-                                "name": "[parameters('storage-settings').biz.accounts[variables('math').modulo2[copyIndex()]]]",
-                                "accountType": "[parameters('storage-settings').biz.accountType]",
-                                "newOrExisting": "[parameters('storage-settings').biz.newOrExisting]",
-                                "existingRg": "[parameters('storage-settings').biz.existingRg]"
-                            },
-                            "sql": {
-                                "name": "[parameters('storage-settings').sql.accounts[variables('math').modulo2[copyIndex()]]]",
-                                "accountType": "[parameters('storage-settings').sql.accountType]",
-                                "newOrExisting": "[parameters('storage-settings').sql.newOrExisting]",
-                                "existingRg": "[parameters('storage-settings').sql.existingRg]"
-                            },
-                            "dc": {
-                                "name": "[parameters('storage-settings').dc.accounts[variables('math').modulo2[copyIndex()]]]",
-                                "accountType": "[parameters('storage-settings').dc.accountType]",
-                                "newOrExisting": "[parameters('storage-settings').dc.newOrExisting]",
-                                "existingRg": "[parameters('storage-settings').dc.existingRg]"
-                            },
-                            "fsw": {
-                                "name": "[parameters('storage-settings').fsw.accounts[0]]",
-                                "accountType": "[parameters('storage-settings').fsw.accountType]",
-                                "newOrExisting": "[parameters('storage-settings').fsw.newOrExisting]",
-                                "existingRg": "[parameters('storage-settings').fsw.existingRg]"
-                            }
+                            "mgmt": "[parameters('storage-settings').mgmt]",                                
+                            "web": "[parameters('storage-settings').web]",
+                            "biz": "[parameters('storage-settings').biz]",
+                            "sql": "[parameters('storage-settings').sql]",
+                            "dc": "[parameters('storage-settings').dc]",
+                            "fsw": "[parameters('storage-settings').fsw]"
                         }
                     },
                     "vm-settings": {
                         "value": {
                             "mgmt": {
-                                "name": "mgmt-vm",
+                                "name": "mgmt-vm-",
+                                "count": 1,
                                 "adminUserName": "[parameters('vm-settings').adminUserName]",
                                 "adminPassword": "[parameters('vm-settings').adminPassword]",
                                 "avsID": "[resourceId('Microsoft.Compute/availabilitySets', 'mgmt-avs')]",
@@ -987,7 +958,7 @@
                                 "storageAccountContainerName": "[toLower(concat(resourceGroup().name, '-', uniqueString(resourceGroup().id, deployment().name)))]"
                             },
                             "fsw": {
-                                "name": "fsw-vm",
+                                "name": "fsw-vm-",
                                 "adminUserName": "[parameters('vm-settings').adminUserName]",
                                 "adminPassword": "[parameters('vm-settings').adminPassword]",
                                 "avsID": "[resourceId('Microsoft.Compute/availabilitySets', 'sql-avs')]",
