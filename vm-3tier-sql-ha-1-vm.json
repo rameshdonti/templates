@@ -3,13 +3,13 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "storage-settings": {
-            "type": "string",
+            "type": "object",
             "metadata": {
                 "description": "These are settings for the Storage Accounts"
             }
         },
         "vm-settings": {
-            "type": "string",
+            "type": "object",
             "metadata": {
                 "description": "These are settings for the Virtual Machines"
             }
