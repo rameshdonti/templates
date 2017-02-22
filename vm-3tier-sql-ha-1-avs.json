@@ -22,28 +22,6 @@
     },
     "resources": [
         {
-            "name": "mgmtAvs",
-            "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2016-09-01",
-            "dependsOn": [],
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "[variables('avsTemplate')]",
-                    "contentVersion": "1.0.0.0"
-                },
-                "parameters": {
-                    "avs-settings": {
-                        "value": {
-                            "name": "[parameters('avs-settings').mgmt.name]",
-                            "updateCount": "[parameters('avs-settings').mgmt.updateCount]",
-                            "faultCount": "[parameters('avs-settings').mgmt.faultCount]"
-                        }
-                    }
-                }
-            }
-        },
-        {
             "name": "webAvs",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2016-09-01",
