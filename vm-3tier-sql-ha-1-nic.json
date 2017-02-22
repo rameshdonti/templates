@@ -164,13 +164,7 @@
                 },
                 "parameters": {
                     "nic-settings": {
-                        "value": {
-                            "name": "[parameters('nic-settings').fsw.name]",
-                            "ipConfigurations": "[parameters('nic-settings').dc.ipConfigurations]",
-                            "dnsSettings": "[parameters('nic-settings').dc.dnsSettings]",
-                            "enableIPForwarding": "[parameters('nic-settings').dc.enableIPForwarding]",
-                            "networkSecurityGroup": "[parameters('nic-settings').dc.networkSecurityGroup]"
-                        }
+                        "value": "[parameters('nic-settings').fsw]"
                     }
                 }
             }
