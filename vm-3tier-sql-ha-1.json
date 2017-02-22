@@ -947,6 +947,7 @@
                             },
                             "dc": {
                                 "name": "dc-vm-",
+                                "count": 2,
                                 "adminUserName": "[parameters('vm-settings').adminUserName]",
                                 "adminPassword": "[parameters('vm-settings').adminPassword]",
                                 "avsID": "[resourceId('Microsoft.Compute/availabilitySets', 'dc-avs')]",
@@ -959,6 +960,7 @@
                             },
                             "fsw": {
                                 "name": "fsw-vm-",
+                                "count": 1,
                                 "adminUserName": "[parameters('vm-settings').adminUserName]",
                                 "adminPassword": "[parameters('vm-settings').adminPassword]",
                                 "avsID": "[resourceId('Microsoft.Compute/availabilitySets', 'sql-avs')]",
