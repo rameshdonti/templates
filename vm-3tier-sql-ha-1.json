@@ -729,7 +729,7 @@
                                             },
                                             "loadBalancerInboundNatRules": [
                                                 {
-                                                    "id": "[concat(variables('extLbID'), '/inboundNatRules/nat-rdp-mgmt')]"
+                                                    "id": "[concat(variables('extLbID'), '/inboundNatRules/nat-rdp-mgmt0')]"
                                                 }
                                             ]
                                         }
