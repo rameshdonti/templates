@@ -942,7 +942,7 @@
                                 "imageOffer": "[variables('vmOS')[parameters('sql-settings').type][1]]",
                                 "imageSku": "[variables('vmOS')[parameters('sql-settings').type][2]]",
                                 "nicName": "sql-nic-",
-                                "vmSize": "Standard_DS4_v2",
+                                "vmSize": "Standard_D2_v2",
                                 "storageAccountContainerName": "[toLower(concat(resourceGroup().name, '-', uniqueString(resourceGroup().id, deployment().name)))]"
                             },
                             "dc": {
