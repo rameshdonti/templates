@@ -25,7 +25,7 @@
             "name": "[concat('mgmtNic', copyIndex())]",
             "copy": {
                 "name": "mgmtNicLoop",
-                "count": "[parameters('nic-settings').web.count]"
+                "count": "[parameters('nic-settings').mgmt.count]"
             },
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2016-09-01",
