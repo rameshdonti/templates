@@ -904,7 +904,7 @@
                                 "imageSku": "[variables('vmOS')[parameters('vm-settings').type][2]]",
                                 "nicName": "mgmt-nic-",
                                 "vmSize": "Standard_D2_v2",
-                                "storageAccountContainerName": "[toLower(concat(resourceGroup().name, '-', uniqueString(resourceGroup().id, deployment().name)))]"
+                                "storageAccountContainerName": "[toLower(concat(resourceGroup().name, '-', uniqueString(resourceGroup().id, deployment().name, '-mgmt')))]"
                             },
                             "web": {
                                 "name": "web-vm-",
@@ -917,7 +917,7 @@
                                 "imageSku": "[variables('vmOS')[parameters('vm-settings').type][2]]",
                                 "nicName": "web-nic-",
                                 "vmSize": "Standard_D2_v2",
-                                "storageAccountContainerName": "[toLower(concat(resourceGroup().name, '-', uniqueString(resourceGroup().id, deployment().name)))]"
+                                "storageAccountContainerName": "[toLower(concat(resourceGroup().name, '-', uniqueString(resourceGroup().id, deployment().name, '-web')))]"
                             },
                             "biz": {
                                 "name": "biz-vm-",
@@ -930,7 +930,7 @@
                                 "imageSku": "[variables('vmOS')[parameters('vm-settings').type][2]]",
                                 "nicName": "biz-nic-",
                                 "vmSize": "Standard_D2_v2",
-                                "storageAccountContainerName": "[toLower(concat(resourceGroup().name, '-', uniqueString(resourceGroup().id, deployment().name)))]"
+                                "storageAccountContainerName": "[toLower(concat(resourceGroup().name, '-', uniqueString(resourceGroup().id, deployment().name, '-biz')))]"
                             },
                             "sql": {
                                 "name": "sql-vm-",
@@ -943,7 +943,7 @@
                                 "imageSku": "[variables('vmOS')[parameters('sql-settings').type][2]]",
                                 "nicName": "sql-nic-",
                                 "vmSize": "Standard_D2_v2",
-                                "storageAccountContainerName": "[toLower(concat(resourceGroup().name, '-', uniqueString(resourceGroup().id, deployment().name)))]"
+                                "storageAccountContainerName": "[toLower(concat(resourceGroup().name, '-', uniqueString(resourceGroup().id, deployment().name, '-sql')))]"
                             },
                             "dc": {
                                 "name": "dc-vm-",
@@ -956,7 +956,7 @@
                                 "imageSku": "[variables('vmOS')[parameters('vm-settings').type][2]]",
                                 "nicName": "dc-nic-",
                                 "vmSize": "Standard_D2_v2",
-                                "storageAccountContainerName": "[toLower(concat(resourceGroup().name, '-', uniqueString(resourceGroup().id, deployment().name)))]"
+                                "storageAccountContainerName": "[toLower(concat(resourceGroup().name, '-', uniqueString(resourceGroup().id, deployment().name, '-dc')))]"
                             },
                             "fsw": {
                                 "name": "fsw-vm-",
@@ -969,7 +969,7 @@
                                 "imageSku": "[variables('vmOS')[parameters('vm-settings').type][2]]",
                                 "nicName": "fsw-nic-",
                                 "vmSize": "Standard_D2_v2",
-                                "storageAccountContainerName": "[toLower(concat(resourceGroup().name, '-', uniqueString(resourceGroup().id, deployment().name)))]"
+                                "storageAccountContainerName": "[toLower(concat(resourceGroup().name, '-', uniqueString(resourceGroup().id, deployment().name, '-fsw')))]"
                             }
                         }
                     },
