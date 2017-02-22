@@ -22,7 +22,11 @@
     },
     "resources": [
         {
-            "name": "mgmtNic",
+            "name": "[concat('mgmtNic', copyIndex())]",
+            "copy": {
+                "name": "mgmtNicLoop",
+                "count": "[parameters('nic-settings').web.count]"
+            },
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2016-09-01",
             "dependsOn": [],
@@ -34,7 +38,13 @@
                 },
                 "parameters": {
                     "nic-settings": {
-                        "value": "[parameters('nic-settings').mgmt]"
+                        "value": {
+                            "name": "[concat(parameters('nic-settings').mgmt.name, copyIndex())]",
+                            "ipConfigurations": "[parameters('nic-settings').mgmt.ipConfigurations]",
+                            "dnsSettings": "[parameters('nic-settings').mgmt.dnsSettings]",
+                            "enableIPForwarding": "[parameters('nic-settings').mgmt.enableIPForwarding]",
+                            "networkSecurityGroup": "[parameters('nic-settings').mgmt.networkSecurityGroup]"
+                        }
                     }
                 }
             }
@@ -152,7 +162,11 @@
             }
         },
         {
-            "name": "fswNic",
+            "name": "[concat('fswNic', copyIndex())]",
+            "copy": {
+                "name": "fswNicLoop",
+                "count": "[parameters('nic-settings').fsw.count]"
+            },
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2016-09-01",
             "dependsOn": [],
@@ -164,7 +178,13 @@
                 },
                 "parameters": {
                     "nic-settings": {
-                        "value": "[parameters('nic-settings').fsw]"
+                        "value": {
+                            "name": "[concat(parameters('nic-settings').fsw.name, copyIndex())]",
+                            "ipConfigurations": "[parameters('nic-settings').fsw.ipConfigurations]",
+                            "dnsSettings": "[parameters('nic-settings').fsw.dnsSettings]",
+                            "enableIPForwarding": "[parameters('nic-settings').fsw.enableIPForwarding]",
+                            "networkSecurityGroup": "[parameters('nic-settings').fsw.networkSecurityGroup]"
+                        }
                     }
                 }
             }
