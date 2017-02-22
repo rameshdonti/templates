@@ -225,7 +225,7 @@
             "name": "[concat('fswVm', copyIndex())]",
             "copy": {
                 "name": "fsmVmLoop",
-                "count": "[parameters('vm-settings').fsm.count]"
+                "count": "[parameters('vm-settings').fsw.count]"
             },
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2016-09-01",
