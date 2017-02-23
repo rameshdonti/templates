@@ -8,16 +8,15 @@
                 "description": "These are settings for the Network Interfaces"
             }
         },
-        "baseUrl": {
-            "type": "string",
+        "base-config": {
+            "type": "object",
             "metadata": {
-                "description": "Base URL for Resource and Shared Templates"
+                "description": "Base config for respository Url and Branch for Resource and Shared Templates"
             }
         }
     },
     "variables": {
-        "resourcesFolder": "resources/feature-pattern-3",
-        "resourcesUrl": "[concat(parameters('baseUrl'), variables('resourcesFolder'))]",
+        "resourcesUrl": "[parameters('base-config').resources]",
         "nicTemplate": "[concat(variables('resourcesUrl'), '/', 'nic.template.json')]"
     },
     "resources": [
@@ -152,7 +151,20 @@
                     "nic-settings": {
                         "value": {
                             "name": "[concat(parameters('nic-settings').dc.name, copyIndex())]",
-                            "ipConfigurations": "[parameters('nic-settings').dc.ipConfigurations]",
+                            "ipConfigurations": [
+                                {
+                                    "name": "ipconfig1",
+                                    "properties": {
+                                        "privateIPAddress": "[parameters('nic-settings').dc.ipAddesses[copyIndex()]]",
+                                        "privateIPAllocationMethod": "static",
+                                        "subnet": {
+                                            "id": {
+                                                "id": "[parameters('nic-settings').dc.subnetId]"
+                                            }
+                                        }
+                                    }
+                                }
+                            ],
                             "dnsSettings": "[parameters('nic-settings').dc.dnsSettings]",
                             "enableIPForwarding": "[parameters('nic-settings').dc.enableIPForwarding]",
                             "networkSecurityGroup": "[parameters('nic-settings').dc.networkSecurityGroup]"

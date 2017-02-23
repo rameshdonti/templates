@@ -44,26 +44,23 @@
                 "description": "These are settings for Domain Controllers"
             }
         },
-        "baseUrl": {
-            "type": "string",
+        "base-config": {
+            "type": "object",
             "metadata": {
-                "description": "Base URL for Resource and Shared Templates"
+                "description": "Base config for respository Url and Branch for Resource and Shared Templates"
             }
         }
     },
     "variables": {
-        "templatesFolder": "templates/feature-pattern-3",
-        "dscScriptsFolder": "dsc-scripts/feature-pattern-3",
-        "resourcesFolder": "resources/feature-pattern-3",
-        "dscScriptsUrl": "[concat(parameters('baseUrl'), variables('dscScriptsFolder'))]",
-        "resourcesUrl": "[concat(parameters('baseUrl'), variables('resourcesFolder'))]",
-        "avsTemplate": "[concat(parameters('baseUrl'), variables('templatesFolder'), '/', 'vm-3tier-sql-ha-1-avs.json')]",
-        "lbTemplate": "[concat(parameters('baseUrl'), variables('templatesFolder'), '/', 'vm-3tier-sql-ha-1-lb.json')]",
-        "nicTemplate": "[concat(parameters('baseUrl'), variables('templatesFolder'), '/', 'vm-3tier-sql-ha-1-nic.json')]",
-        "nsgTemplate": "[concat(parameters('baseUrl'), variables('templatesFolder'), '/', 'vm-3tier-sql-ha-1-nsg.json')]",
-        "storageTemplate": "[concat(parameters('baseUrl'), variables('templatesFolder'), '/', 'vm-3tier-sql-ha-1-storage.json')]",
-        "vmTemplate": "[concat(parameters('baseUrl'), variables('templatesFolder'), '/', 'vm-3tier-sql-ha-1-vm.json')]",
-        "diagTemplate": "[concat(parameters('baseUrl'), 'extn-diag.template.json')]",
+        "dscScriptsUrl": "[parameters('base-config').dscScripts]",
+        "resourcesUrl": "[parameters('base-config').resources]",
+        "templatesUrl": "[parameters('base-config').resources]",
+        "avsTemplate": "[concat(variables('templatesUrl'), '/', 'vm-3tier-sql-ha-1-avs.json')]",
+        "lbTemplate": "[concat(variables('templatesUrl'), '/', 'vm-3tier-sql-ha-1-lb.json')]",
+        "nicTemplate": "[concat(variables('templatesUrl'), '/', 'vm-3tier-sql-ha-1-nic.json')]",
+        "nsgTemplate": "[concat(variables('templatesUrl'), '/', 'vm-3tier-sql-ha-1-nsg.json')]",
+        "storageTemplate": "[concat(variables('templatesUrl'), '/', 'vm-3tier-sql-ha-1-storage.json')]",
+        "vmTemplate": "[concat(variables('templatesUrl'), '/', 'vm-3tier-sql-ha-1-vm.json')]",
         "dscTemplate": "[concat(variables('resourcesUrl'), '/', 'extn-dsc.template.json')]",
         "pipTemplate": "[concat(variables('resourcesUrl'), '/pip-', parameters('pip-settings').newOrExisting, '.template.json')]",
         "scriptTemplate": "[concat(variables('resourcesUrl'), '/', 'extn-script.template.json')]",
@@ -124,8 +121,8 @@
                     "storage-settings": {
                         "value": "[parameters('storage-settings')]"
                     },
-                    "baseUrl": {
-                        "value": "[parameters('baseUrl')]"
+                    "base-config": {
+                        "value": "[parameters('base-config')]"
                     }
                 }
             }
@@ -222,8 +219,8 @@
                             }
                         }
                     },
-                    "baseUrl": {
-                        "value": "[parameters('baseUrl')]"
+                    "base-config": {
+                        "value": "[parameters('base-config')]"
                     }
                 }
             }
@@ -313,8 +310,8 @@
                             }
                         }
                     },
-                    "baseUrl": {
-                        "value": "[parameters('baseUrl')]"
+                    "base-config": {
+                        "value": "[parameters('base-config')]"
                     }
                 }
             }
@@ -687,8 +684,8 @@
                             }
                         }
                     },
-                    "baseUrl": {
-                        "value": "[parameters('baseUrl')]"
+                    "base-config": {
+                        "value": "[parameters('base-config')]"
                     }
                 }
             }
@@ -812,24 +809,15 @@
                             "dc": {
                                 "name": "dc-nic-",
                                 "count": 2,
-                                "ipConfigurations": [
-                                    {
-                                        "name": "ipconfig1",
-                                        "properties": {
-                                            "privateIPAllocationMethod": "Dynamic",
-                                            "subnet": {
-                                                "id": "[concat(reference('virtualNetwork').outputs.vnetID.value, '/subnets/', parameters('vnet-settings').subnets.subnet4Name)]"
-                                            }
-                                        }
-                                    }
-                                ],
                                 "dnsSettings": {
                                     "dnsServers": []
                                 },
                                 "enableIPForwarding": false,
+                                "ipAddresses": "[parameters('dc-settings').ipAddresses]",
                                 "networkSecurityGroup": {
                                     "id": "[resourceId('Microsoft.Network/networkSecurityGroups', 'dc-nsg')]"
-                                }
+                                },
+                                "subnetId": "[concat(reference('virtualNetwork').outputs.vnetID.value, '/subnets/', parameters('vnet-settings').subnets.subnet4Name)]"
                             },
                             "fsw": {
                                 "name": "fsw-nic-",
@@ -855,8 +843,8 @@
                             }
                         }
                     },
-                    "baseUrl": {
-                        "value": "[parameters('baseUrl')]"
+                    "base-config": {
+                        "value": "[parameters('base-config')]"
                     }
                 }
             }
@@ -968,8 +956,8 @@
                             }
                         }
                     },
-                    "baseUrl": {
-                        "value": "[parameters('baseUrl')]"
+                    "base-config": {
+                        "value": "[parameters('base-config')]"
                     }
                 }
             }

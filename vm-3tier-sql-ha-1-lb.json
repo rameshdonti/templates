@@ -14,16 +14,15 @@
                 "description": "These are settings for the Inbound NAT Rules"
             }
         },
-        "baseUrl": {
-            "type": "string",
+        "base-config": {
+            "type": "object",
             "metadata": {
-                "description": "Base URL for Resource and Shared Templates"
+                "description": "Base config for respository Url and Branch for Resource and Shared Templates"
             }
         }
     },
     "variables": {
-        "resourcesFolder": "resources/feature-pattern-3",
-        "resourcesUrl": "[concat(parameters('baseUrl'), variables('resourcesFolder'))]",
+        "resourcesUrl": "[parameters('base-config').resources]",
         "lbTemplate": "[concat(variables('resourcesUrl'), '/', 'lb.template.json')]",
         "inboundNatTemplate": "[concat(variables('resourcesUrl'), '/', 'inbound-nat.template.json')]",
         "extLbBackendPoolID": "[concat(variables('extLbID'),'/backendAddressPools/', variables('extLbBackendPoolName'))]",

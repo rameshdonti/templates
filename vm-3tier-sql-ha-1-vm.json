@@ -14,16 +14,16 @@
                 "description": "These are settings for the Virtual Machines"
             }
         },
-        "baseUrl": {
-            "type": "string",
+        "base-config": {
+            "type": "object",
             "metadata": {
-                "description": "Base URL for Resource and Shared Templates"
+                "description": "Base config for respository Url and Branch for Resource and Shared Templates"
             }
         }
     },
     "variables": {
-        "resourcesFolder": "resources/feature-pattern-3",
-        "resourcesUrl": "[concat(parameters('baseUrl'), variables('resourcesFolder'))]",
+        "dscScriptsUrl": "[parameters('base-config').dscScripts]",
+        "resourcesUrl": "[parameters('base-config').resources]",
         "vmTemplate": "[concat(variables('resourcesUrl'), '/', 'vm-windows.template.json')]",
         "math": {
             "modulo2": [ 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1 ],
@@ -218,7 +218,40 @@
                             "storageAccountContainerName": "[parameters('vm-settings').dc.storageAccountContainerName]"
                         }
                     }
-                }
+                },
+                "resources": [
+                    {
+                        "type": "Microsoft.Compute/virtualMachines/extensions",
+                        "name": "[concat(parameters('vm-settings').dc.name, copyIndex(), '/InstallDomainController')]",
+                        "apiVersion": "2016-08-30",
+                        "location": "[resourceGroup().location]",
+                        "dependsOn": [
+                            "[resourceId('Microsoft.Compute/virtualMachines', parameters('vm-settings').dc.name, copyIndex())]"
+                        ],
+                        "properties": {
+                            "publisher": "Microsoft.Powershell",
+                            "type": "DSC",
+                            "typeHandlerVersion": "2.19",
+                            "autoUpgradeMinorVersion": false,
+                            "settings": {
+                                "modulesURL": "[parameters('adPDCModulesURL')]",
+                                "configurationFunction": "[parameters('adPDCConfigurationFunction')]",
+                                "properties": {
+                                    "domainName": "[parameters('domainName')]",
+                                    "adminCreds": {
+                                        "userName": "[parameters('adminUserName')]",
+                                        "password": "PrivateSettingsRef:adminPassword"
+                                    }
+                                }
+                            },
+                            "protectedSettings": {
+                                "items": {
+                                    "adminPassword": "[parameters('adminPassword')]"
+                                }
+                            }
+                        }
+                    }
+                ]
             }
         },
         {
