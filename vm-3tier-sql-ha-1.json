@@ -957,7 +957,7 @@
                                 "imagePublisher": "[variables('vmOS')[parameters('vm-settings').type][0]]",
                                 "imageOffer": "[variables('vmOS')[parameters('vm-settings').type][1]]",
                                 "imageSku": "[variables('vmOS')[parameters('vm-settings').type][2]]",
-                                "modules": "[parameters('dc-settings').modules]",
+                                "dsc": "[parameters('dc-settings').dsc]",
                                 "nicName": "dc-nic-",
                                 "vmSize": "Standard_D2_v2",
                                 "storageAccountContainerName": "[toLower(concat(resourceGroup().name, '-dc-', uniqueString(resourceGroup().id, deployment().name)))]"
