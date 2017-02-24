@@ -54,7 +54,7 @@
     "variables": {
         "dscScriptsUrl": "[parameters('base-config').dscScripts]",
         "resourcesUrl": "[parameters('base-config').resources]",
-        "templatesUrl": "[parameters('base-config').resources]",
+        "templatesUrl": "[parameters('base-config').templates]",
         "avsTemplate": "[concat(variables('templatesUrl'), '/', 'vm-3tier-sql-ha-1-avs.json')]",
         "lbTemplate": "[concat(variables('templatesUrl'), '/', 'vm-3tier-sql-ha-1-lb.json')]",
         "nicTemplate": "[concat(variables('templatesUrl'), '/', 'vm-3tier-sql-ha-1-nic.json')]",
