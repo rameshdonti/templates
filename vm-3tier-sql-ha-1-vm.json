@@ -234,19 +234,19 @@
                             "typeHandlerVersion": "2.19",
                             "autoUpgradeMinorVersion": false,
                             "settings": {
-                                "modulesURL": "[parameters('adPDCModulesURL')]",
-                                "configurationFunction": "[parameters('adPDCConfigurationFunction')]",
+                                "modulesURL": "[concat(variables('dscScriptsUrl'), '/', parameters('vm-settings').dc.modules[copyIndex()][0])]",
+                                "configurationFunction": "[concat(variables('dscScriptsUrl'), '/', parameters('vm-settings').dc.modules[copyIndex()][1])]",
                                 "properties": {
-                                    "domainName": "[parameters('domainName')]",
+                                    "domainName": "[parameters('vm-settings').dc.domainName]",
                                     "adminCreds": {
-                                        "userName": "[parameters('adminUserName')]",
+                                        "userName": "[parameters('vm-settings').dc.adminUserName]",
                                         "password": "PrivateSettingsRef:adminPassword"
                                     }
                                 }
                             },
                             "protectedSettings": {
                                 "items": {
-                                    "adminPassword": "[parameters('adminPassword')]"
+                                    "adminPassword": "[parameters('vm-settings').dc.adminPassword]"
                                 }
                             }
                         }
