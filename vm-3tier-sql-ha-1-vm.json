@@ -24,6 +24,7 @@
     "variables": {
         "dscScriptsUrl": "[parameters('base-config').dscScripts]",
         "resourcesUrl": "[parameters('base-config').resources]",
+        "dscTemplate": "[concat(variables('resourcesUrl'), '/', 'extn-dsc.template.json')]",
         "vmTemplate": "[concat(variables('resourcesUrl'), '/', 'vm-windows.template.json')]",
         "math": {
             "modulo2": [ 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1 ],
@@ -218,40 +219,7 @@
                             "storageAccountContainerName": "[parameters('vm-settings').dc.storageAccountContainerName]"
                         }
                     }
-                },
-                "resources": [
-                    {
-                        "type": "Microsoft.Compute/virtualMachines/extensions",
-                        "name": "[concat(parameters('vm-settings').dc.name, copyIndex(), '/InstallDomainController')]",
-                        "apiVersion": "2016-08-30",
-                        "location": "[resourceGroup().location]",
-                        "dependsOn": [
-                            "[resourceId('Microsoft.Compute/virtualMachines', parameters('vm-settings').dc.name, copyIndex())]"
-                        ],
-                        "properties": {
-                            "publisher": "Microsoft.Powershell",
-                            "type": "DSC",
-                            "typeHandlerVersion": "2.19",
-                            "autoUpgradeMinorVersion": false,
-                            "settings": {
-                                "modulesURL": "[concat(variables('dscScriptsUrl'), '/active-directory/', parameters('vm-settings').dc.modules[copyIndex()][0])]",
-                                "configurationFunction": "[parameters('vm-settings').dc.modules[copyIndex()][1]]",
-                                "properties": {
-                                    "domainName": "[parameters('vm-settings').dc.domainName]",
-                                    "adminCreds": {
-                                        "userName": "[parameters('vm-settings').dc.adminUserName]",
-                                        "password": "PrivateSettingsRef:adminPassword"
-                                    }
-                                }
-                            },
-                            "protectedSettings": {
-                                "items": {
-                                    "adminPassword": "[parameters('vm-settings').dc.adminPassword]"
-                                }
-                            }
-                        }
-                    }
-                ]
+                }
             }
         },
         {
@@ -287,6 +255,40 @@
                             "nicID": "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('vm-settings').fsw.nicName, copyIndex()))]",
                             "vmSize": "[parameters('vm-settings').fsw.vmSize]",
                             "storageAccountContainerName": "[parameters('vm-settings').fsw.storageAccountContainerName]"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "name": "[concat('dscScriptInstallAD', copyindex())]",
+            "copy": {
+                "name": "dscScriptLoop",
+                "count": "[parameters('vm-settings').dc.count]"
+            },
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2016-09-01",
+            "dependsOn": [
+                "[resourceId('Microsoft.Resources/deployments', concat('dcVm', copyindex()))]"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('dscTemplate')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "extn-settings": {
+                        "value": {
+                            "name": "dsc-install-ad",
+                            "publisher": "Microsoft.Powershell",
+                            "type": "DSC",
+                            "typeHandlerVersion": "2.9",
+                            "vmName": "[concat(parameters('vm-settings').dc.name, copyIndex())]",
+                            "url": "[variables('dscScriptsUrl')]",
+                            "folder": "active-directory",
+                            "file": "[parameters('vm-settings').dc.dsc[copyIndex()]]",
+                            "function": "[parameters('vm-settings').dc.dsc[copyIndex()]]"
                         }
                     }
                 }
