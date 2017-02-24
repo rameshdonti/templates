@@ -155,7 +155,7 @@
                                 {
                                     "name": "ipconfig1",
                                     "properties": {
-                                        "privateIPAddress": "[parameters('nic-settings').dc.ipAddesses[copyIndex()]]",
+                                        "privateIPAddress": "[parameters('nic-settings').dc.ipAddresses[copyIndex()]]",
                                         "privateIPAllocationMethod": "static",
                                         "subnet": {
                                             "id": {
