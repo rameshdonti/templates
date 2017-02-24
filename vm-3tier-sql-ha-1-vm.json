@@ -234,7 +234,7 @@
                             "typeHandlerVersion": "2.19",
                             "autoUpgradeMinorVersion": false,
                             "settings": {
-                                "modulesURL": "[concat(variables('dscScriptsUrl'), '/', parameters('vm-settings').dc.modules[copyIndex()][0])]",
+                                "modulesURL": "[concat(variables('dscScriptsUrl'), '/active-directory/', parameters('vm-settings').dc.modules[copyIndex()][0])]",
                                 "configurationFunction": "[concat(variables('dscScriptsUrl'), '/', parameters('vm-settings').dc.modules[copyIndex()][1])]",
                                 "properties": {
                                     "domainName": "[parameters('vm-settings').dc.domainName]",
