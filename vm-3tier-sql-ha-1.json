@@ -177,10 +177,7 @@
                                     }
                                 }
                             ],
-                            "dnsSettings": [
-                                "[parameters('dc-settings').ipAddresses[0]]",
-                                "[parameters('dc-settings').ipAddresses[1]]" 
-                            ]
+                            "dnsSettings": [ ]
                         }
                     }
                 }
@@ -731,7 +728,10 @@
                                     }
                                 ],
                                 "dnsSettings": {
-                                    "dnsServers": []
+                                    "dnsServers": [
+                                        "[parameters('dc-settings').ipAddresses[0]]",
+                                        "[parameters('dc-settings').ipAddresses[1]]"
+                                    ]
                                 },
                                 "enableIPForwarding": false,
                                 "networkSecurityGroup": {
@@ -758,7 +758,10 @@
                                     }
                                 ],
                                 "dnsSettings": {
-                                    "dnsServers": []
+                                    "dnsServers": [
+                                        "[parameters('dc-settings').ipAddresses[0]]",
+                                        "[parameters('dc-settings').ipAddresses[1]]"
+                                    ]
                                 },
                                 "enableIPForwarding": false,
                                 "networkSecurityGroup": {
@@ -780,7 +783,10 @@
                                     }
                                 ],
                                 "dnsSettings": {
-                                    "dnsServers": []
+                                    "dnsServers": [
+                                        "[parameters('dc-settings').ipAddresses[0]]",
+                                        "[parameters('dc-settings').ipAddresses[1]]"
+                                    ]
                                 },
                                 "enableIPForwarding": false,
                                 "networkSecurityGroup": {
@@ -802,7 +808,10 @@
                                     }
                                 ],
                                 "dnsSettings": {
-                                    "dnsServers": []
+                                    "dnsServers": [
+                                        "[parameters('dc-settings').ipAddresses[0]]",
+                                        "[parameters('dc-settings').ipAddresses[1]]"
+                                    ]
                                 },
                                 "enableIPForwarding": false,
                                 "networkSecurityGroup": {
@@ -813,7 +822,10 @@
                                 "name": "dc-nic-",
                                 "count": 2,
                                 "dnsSettings": {
-                                    "dnsServers": []
+                                    "dnsServers": [
+                                        "[parameters('dc-settings').ipAddresses[0]]",
+                                        "[parameters('dc-settings').ipAddresses[1]]"
+                                    ]
                                 },
                                 "enableIPForwarding": false,
                                 "ipAddresses": "[parameters('dc-settings').ipAddresses]",
@@ -837,7 +849,10 @@
                                     }
                                 ],
                                 "dnsSettings": {
-                                    "dnsServers": []
+                                    "dnsServers": [
+                                        "[parameters('dc-settings').ipAddresses[0]]",
+                                        "[parameters('dc-settings').ipAddresses[1]]"
+                                    ]
                                 },
                                 "enableIPForwarding": false,
                                 "networkSecurityGroup": {
