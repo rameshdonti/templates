@@ -832,7 +832,9 @@
                                 "networkSecurityGroup": {
                                     "id": "[resourceId('Microsoft.Network/networkSecurityGroups', 'dc-nsg')]"
                                 },
-                                "subnetId": "[concat(reference('virtualNetwork').outputs.vnetID.value, '/subnets/', parameters('vnet-settings').subnets.subnet4Name)]"
+                                "subnetId": {
+                                    "id": "[concat(reference('virtualNetwork').outputs.vnetID.value, '/subnets/', parameters('vnet-settings').subnets.subnet4Name)]"
+                                }
                             },
                             "fsw": {
                                 "name": "fsw-nic-",

@@ -157,11 +157,7 @@
                                     "properties": {
                                         "privateIPAddress": "[parameters('nic-settings').dc.ipAddresses[copyIndex()]]",
                                         "privateIPAllocationMethod": "static",
-                                        "subnet": {
-                                            "id": {
-                                                "id": "[parameters('nic-settings').dc.subnetId]"
-                                            }
-                                        }
+                                        "subnet": "[parameters('nic-settings').dc.subnetId]"
                                     }
                                 }
                             ],
