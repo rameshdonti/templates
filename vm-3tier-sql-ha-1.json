@@ -177,7 +177,7 @@
                                     }
                                 }
                             ],
-                            "dnsSettings": [ ]
+                            "dnsSettings": []
                         }
                     }
                 }
@@ -315,7 +315,7 @@
                     }
                 }
             }
-        },  
+        },
         {
             "name": "networkSecurityGroups",
             "type": "Microsoft.Resources/deployments",
@@ -728,6 +728,280 @@
                                     }
                                 ],
                                 "dnsSettings": {
+                                    "dnsServers": []
+                                },
+                                "enableIPForwarding": false,
+                                "networkSecurityGroup": {
+                                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', 'mgmt-nsg')]"
+                                }
+                            },
+                            "web": {
+                                "name": "web-nic-",
+                                "count": "[parameters('vm-settings').count]",
+                                "ipConfigurations": [
+                                    {
+                                        "name": "ipconfig1",
+                                        "properties": {
+                                            "privateIPAllocationMethod": "Dynamic",
+                                            "subnet": {
+                                                "id": "[concat(reference('virtualNetwork').outputs.vnetID.value, '/subnets/', parameters('vnet-settings').subnets.subnet1Name)]"
+                                            },
+                                            "loadBalancerBackendAddressPools": [
+                                                {
+                                                    "id": "[variables('extLbBackendPoolID')]"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ],
+                                "dnsSettings": {
+                                    "dnsServers": []
+                                },
+                                "enableIPForwarding": false,
+                                "networkSecurityGroup": {
+                                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', 'web-nsg')]"
+                                }
+                            },
+                            "biz": {
+                                "name": "biz-nic-",
+                                "count": "[parameters('vm-settings').count]",
+                                "ipConfigurations": [
+                                    {
+                                        "name": "ipconfig1",
+                                        "properties": {
+                                            "privateIPAllocationMethod": "Dynamic",
+                                            "subnet": {
+                                                "id": "[concat(reference('virtualNetwork').outputs.vnetID.value, '/subnets/', parameters('vnet-settings').subnets.subnet2Name)]"
+                                            }
+                                        }
+                                    }
+                                ],
+                                "dnsSettings": {
+                                    "dnsServers": []
+                                },
+                                "enableIPForwarding": false,
+                                "networkSecurityGroup": {
+                                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', 'biz-nsg')]"
+                                }
+                            },
+                            "sql": {
+                                "name": "sql-nic-",
+                                "count": "[parameters('sql-settings').count]",
+                                "ipConfigurations": [
+                                    {
+                                        "name": "ipconfig1",
+                                        "properties": {
+                                            "privateIPAllocationMethod": "Dynamic",
+                                            "subnet": {
+                                                "id": "[concat(reference('virtualNetwork').outputs.vnetID.value, '/subnets/', parameters('vnet-settings').subnets.subnet3Name)]"
+                                            }
+                                        }
+                                    }
+                                ],
+                                "dnsSettings": {
+                                    "dnsServers": []
+                                },
+                                "enableIPForwarding": false,
+                                "networkSecurityGroup": {
+                                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', 'sql-nsg')]"
+                                }
+                            },
+                            "dc": {
+                                "name": "dc-nic-",
+                                "count": 2,
+                                "dnsSettings": {
+                                    "dnsServers": []
+                                },
+                                "enableIPForwarding": false,
+                                "ipAddresses": "[parameters('dc-settings').ipAddresses]",
+                                "networkSecurityGroup": {
+                                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', 'dc-nsg')]"
+                                },
+                                "subnetId": {
+                                    "id": "[concat(reference('virtualNetwork').outputs.vnetID.value, '/subnets/', parameters('vnet-settings').subnets.subnet4Name)]"
+                                }
+                            },
+                            "fsw": {
+                                "name": "fsw-nic-",
+                                "count": 1,
+                                "ipConfigurations": [
+                                    {
+                                        "name": "ipconfig1",
+                                        "properties": {
+                                            "privateIPAllocationMethod": "Dynamic",
+                                            "subnet": {
+                                                "id": "[concat(reference('virtualNetwork').outputs.vnetID.value, '/subnets/', parameters('vnet-settings').subnets.subnet3Name)]"
+                                            }
+                                        }
+                                    }
+                                ],
+                                "dnsSettings": {
+                                    "dnsServers": []
+                                },
+                                "enableIPForwarding": false,
+                                "networkSecurityGroup": {
+                                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', 'sql-nsg')]"
+                                }
+                            }
+                        }
+                    },
+                    "base-config": {
+                        "value": "[parameters('base-config')]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "virtualMachines",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2016-09-01",
+            "dependsOn": [
+                "[resourceId('Microsoft.Resources/deployments', 'storageAccounts')]",
+                "[resourceId('Microsoft.Resources/deployments', 'networkInterfaces')]"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('vmTemplate')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "storage-settings": {
+                        "value": {
+                            "mgmt": "[parameters('storage-settings').mgmt]",
+                            "web": "[parameters('storage-settings').web]",
+                            "biz": "[parameters('storage-settings').biz]",
+                            "sql": "[parameters('storage-settings').sql]",
+                            "dc": "[parameters('storage-settings').dc]",
+                            "fsw": "[parameters('storage-settings').fsw]"
+                        }
+                    },
+                    "vm-settings": {
+                        "value": {
+                            "mgmt": {
+                                "name": "mgmt-vm-",
+                                "count": 1,
+                                "adminUserName": "[parameters('vm-settings').adminUserName]",
+                                "adminPassword": "[parameters('vm-settings').adminPassword]",
+                                "avsID": "[resourceId('Microsoft.Compute/availabilitySets', 'web-avs')]",
+                                "imagePublisher": "[variables('vmOS')[parameters('vm-settings').type][0]]",
+                                "imageOffer": "[variables('vmOS')[parameters('vm-settings').type][1]]",
+                                "imageSku": "[variables('vmOS')[parameters('vm-settings').type][2]]",
+                                "nicName": "mgmt-nic-",
+                                "vmSize": "Standard_D2_v2",
+                                "storageAccountContainerName": "[toLower(concat(resourceGroup().name, '-mgmt-', uniqueString(resourceGroup().id, deployment().name)))]"
+                            },
+                            "web": {
+                                "name": "web-vm-",
+                                "count": "[parameters('vm-settings').count]",
+                                "adminUserName": "[parameters('vm-settings').adminUserName]",
+                                "adminPassword": "[parameters('vm-settings').adminPassword]",
+                                "avsID": "[resourceId('Microsoft.Compute/availabilitySets', 'web-avs')]",
+                                "imagePublisher": "[variables('vmOS')[parameters('vm-settings').type][0]]",
+                                "imageOffer": "[variables('vmOS')[parameters('vm-settings').type][1]]",
+                                "imageSku": "[variables('vmOS')[parameters('vm-settings').type][2]]",
+                                "nicName": "web-nic-",
+                                "vmSize": "Standard_D2_v2",
+                                "storageAccountContainerName": "[toLower(concat(resourceGroup().name, '-web-', uniqueString(resourceGroup().id, deployment().name)))]"
+                            },
+                            "biz": {
+                                "name": "biz-vm-",
+                                "count": "[parameters('vm-settings').count]",
+                                "adminUserName": "[parameters('vm-settings').adminUserName]",
+                                "adminPassword": "[parameters('vm-settings').adminPassword]",
+                                "avsID": "[resourceId('Microsoft.Compute/availabilitySets', 'biz-avs')]",
+                                "imagePublisher": "[variables('vmOS')[parameters('vm-settings').type][0]]",
+                                "imageOffer": "[variables('vmOS')[parameters('vm-settings').type][1]]",
+                                "imageSku": "[variables('vmOS')[parameters('vm-settings').type][2]]",
+                                "nicName": "biz-nic-",
+                                "vmSize": "Standard_D2_v2",
+                                "storageAccountContainerName": "[toLower(concat(resourceGroup().name, '-biz-', uniqueString(resourceGroup().id, deployment().name)))]"
+                            },
+                            "sql": {
+                                "name": "sql-vm-",
+                                "count": "[parameters('sql-settings').count]",
+                                "adminUserName": "[parameters('vm-settings').adminUserName]",
+                                "adminPassword": "[parameters('vm-settings').adminPassword]",
+                                "avsID": "[resourceId('Microsoft.Compute/availabilitySets', 'sql-avs')]",
+                                "imagePublisher": "[variables('vmOS')[parameters('sql-settings').type][0]]",
+                                "imageOffer": "[variables('vmOS')[parameters('sql-settings').type][1]]",
+                                "imageSku": "[variables('vmOS')[parameters('sql-settings').type][2]]",
+                                "nicName": "sql-nic-",
+                                "vmSize": "Standard_D2_v2",
+                                "storageAccountContainerName": "[toLower(concat(resourceGroup().name, '-sql-', uniqueString(resourceGroup().id, deployment().name)))]"
+                            },
+                            "dc": {
+                                "name": "dc-vm-",
+                                "count": 2,
+                                "adminUserName": "[parameters('vm-settings').adminUserName]",
+                                "adminPassword": "[parameters('vm-settings').adminPassword]",
+                                "avsID": "[resourceId('Microsoft.Compute/availabilitySets', 'dc-avs')]",
+                                "imagePublisher": "[variables('vmOS')[parameters('vm-settings').type][0]]",
+                                "imageOffer": "[variables('vmOS')[parameters('vm-settings').type][1]]",
+                                "imageSku": "[variables('vmOS')[parameters('vm-settings').type][2]]",
+                                "dsc": "[parameters('dc-settings').dsc]",
+                                "nicName": "dc-nic-",
+                                "vmSize": "Standard_D2_v2",
+                                "storageAccountContainerName": "[toLower(concat(resourceGroup().name, '-dc-', uniqueString(resourceGroup().id, deployment().name)))]"
+                            },
+                            "fsw": {
+                                "name": "fsw-vm-",
+                                "count": 1,
+                                "adminUserName": "[parameters('vm-settings').adminUserName]",
+                                "adminPassword": "[parameters('vm-settings').adminPassword]",
+                                "avsID": "[resourceId('Microsoft.Compute/availabilitySets', 'sql-avs')]",
+                                "imagePublisher": "[variables('vmOS')[parameters('vm-settings').type][0]]",
+                                "imageOffer": "[variables('vmOS')[parameters('vm-settings').type][1]]",
+                                "imageSku": "[variables('vmOS')[parameters('vm-settings').type][2]]",
+                                "nicName": "fsw-nic-",
+                                "vmSize": "Standard_D2_v2",
+                                "storageAccountContainerName": "[toLower(concat(resourceGroup().name, '-fsw-', uniqueString(resourceGroup().id, deployment().name)))]"
+                            }
+                        }
+                    },
+                    "base-config": {
+                        "value": "[parameters('base-config')]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "updateDNSNetworkInterfaces",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2016-09-01",
+            "dependsOn": [
+                "[resourceId('Microsoft.Resources/deployments', 'networkInterfaces')]",
+                "[resourceId('Microsoft.Resources/deployments', 'virtualMachines')]"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('nicTemplate')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "nic-settings": {
+                        "value": {
+                            "mgmt": {
+                                "name": "mgmt-nic-",
+                                "count": 1,
+                                "ipConfigurations": [
+                                    {
+                                        "name": "ipconfig1",
+                                        "properties": {
+                                            "privateIPAllocationMethod": "Dynamic",
+                                            "subnet": {
+                                                "id": "[concat(reference('virtualNetwork').outputs.vnetID.value, '/subnets/', parameters('vnet-settings').subnets.subnet0Name)]"
+                                            },
+                                            "loadBalancerInboundNatRules": [
+                                                {
+                                                    "id": "[concat(variables('extLbID'), '/inboundNatRules/nat-rdp-mgmt0')]"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ],
+                                "dnsSettings": {
                                     "dnsServers": [
                                         "[parameters('dc-settings').ipAddresses[0]]",
                                         "[parameters('dc-settings').ipAddresses[1]]"
@@ -860,120 +1134,6 @@
                                 "networkSecurityGroup": {
                                     "id": "[resourceId('Microsoft.Network/networkSecurityGroups', 'sql-nsg')]"
                                 }
-                            }
-                        }
-                    },
-                    "base-config": {
-                        "value": "[parameters('base-config')]"
-                    }
-                }
-            }
-        },
-        {
-            "name": "virtualMachines",
-            "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2016-09-01",
-            "dependsOn": [
-                "[resourceId('Microsoft.Resources/deployments', 'storageAccounts')]",
-                "[resourceId('Microsoft.Resources/deployments', 'networkInterfaces')]"
-            ],
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "[variables('vmTemplate')]",
-                    "contentVersion": "1.0.0.0"
-                },
-                "parameters": {
-                    "storage-settings": {
-                        "value":  {
-                            "mgmt": "[parameters('storage-settings').mgmt]",                                
-                            "web": "[parameters('storage-settings').web]",
-                            "biz": "[parameters('storage-settings').biz]",
-                            "sql": "[parameters('storage-settings').sql]",
-                            "dc": "[parameters('storage-settings').dc]",
-                            "fsw": "[parameters('storage-settings').fsw]"
-                        }
-                    },
-                    "vm-settings": {
-                        "value": {
-                            "mgmt": {
-                                "name": "mgmt-vm-",
-                                "count": 1,
-                                "adminUserName": "[parameters('vm-settings').adminUserName]",
-                                "adminPassword": "[parameters('vm-settings').adminPassword]",
-                                "avsID": "[resourceId('Microsoft.Compute/availabilitySets', 'web-avs')]",
-                                "imagePublisher": "[variables('vmOS')[parameters('vm-settings').type][0]]",
-                                "imageOffer": "[variables('vmOS')[parameters('vm-settings').type][1]]",
-                                "imageSku": "[variables('vmOS')[parameters('vm-settings').type][2]]",
-                                "nicName": "mgmt-nic-",
-                                "vmSize": "Standard_D2_v2",
-                                "storageAccountContainerName": "[toLower(concat(resourceGroup().name, '-mgmt-', uniqueString(resourceGroup().id, deployment().name)))]"
-                            },
-                            "web": {
-                                "name": "web-vm-",
-                                "count": "[parameters('vm-settings').count]",
-                                "adminUserName": "[parameters('vm-settings').adminUserName]",
-                                "adminPassword": "[parameters('vm-settings').adminPassword]",
-                                "avsID": "[resourceId('Microsoft.Compute/availabilitySets', 'web-avs')]",
-                                "imagePublisher": "[variables('vmOS')[parameters('vm-settings').type][0]]",
-                                "imageOffer": "[variables('vmOS')[parameters('vm-settings').type][1]]",
-                                "imageSku": "[variables('vmOS')[parameters('vm-settings').type][2]]",
-                                "nicName": "web-nic-",
-                                "vmSize": "Standard_D2_v2",
-                                "storageAccountContainerName": "[toLower(concat(resourceGroup().name, '-web-', uniqueString(resourceGroup().id, deployment().name)))]"
-                            },
-                            "biz": {
-                                "name": "biz-vm-",
-                                "count": "[parameters('vm-settings').count]",
-                                "adminUserName": "[parameters('vm-settings').adminUserName]",
-                                "adminPassword": "[parameters('vm-settings').adminPassword]",
-                                "avsID": "[resourceId('Microsoft.Compute/availabilitySets', 'biz-avs')]",
-                                "imagePublisher": "[variables('vmOS')[parameters('vm-settings').type][0]]",
-                                "imageOffer": "[variables('vmOS')[parameters('vm-settings').type][1]]",
-                                "imageSku": "[variables('vmOS')[parameters('vm-settings').type][2]]",
-                                "nicName": "biz-nic-",
-                                "vmSize": "Standard_D2_v2",
-                                "storageAccountContainerName": "[toLower(concat(resourceGroup().name, '-biz-', uniqueString(resourceGroup().id, deployment().name)))]"
-                            },
-                            "sql": {
-                                "name": "sql-vm-",
-                                "count": "[parameters('sql-settings').count]",
-                                "adminUserName": "[parameters('vm-settings').adminUserName]",
-                                "adminPassword": "[parameters('vm-settings').adminPassword]",
-                                "avsID": "[resourceId('Microsoft.Compute/availabilitySets', 'sql-avs')]",
-                                "imagePublisher": "[variables('vmOS')[parameters('sql-settings').type][0]]",
-                                "imageOffer": "[variables('vmOS')[parameters('sql-settings').type][1]]",
-                                "imageSku": "[variables('vmOS')[parameters('sql-settings').type][2]]",
-                                "nicName": "sql-nic-",
-                                "vmSize": "Standard_D2_v2",
-                                "storageAccountContainerName": "[toLower(concat(resourceGroup().name, '-sql-', uniqueString(resourceGroup().id, deployment().name)))]"
-                            },
-                            "dc": {
-                                "name": "dc-vm-",
-                                "count": 2,
-                                "adminUserName": "[parameters('vm-settings').adminUserName]",
-                                "adminPassword": "[parameters('vm-settings').adminPassword]",
-                                "avsID": "[resourceId('Microsoft.Compute/availabilitySets', 'dc-avs')]",
-                                "imagePublisher": "[variables('vmOS')[parameters('vm-settings').type][0]]",
-                                "imageOffer": "[variables('vmOS')[parameters('vm-settings').type][1]]",
-                                "imageSku": "[variables('vmOS')[parameters('vm-settings').type][2]]",
-                                "dsc": "[parameters('dc-settings').dsc]",
-                                "nicName": "dc-nic-",
-                                "vmSize": "Standard_D2_v2",
-                                "storageAccountContainerName": "[toLower(concat(resourceGroup().name, '-dc-', uniqueString(resourceGroup().id, deployment().name)))]"
-                            },
-                            "fsw": {
-                                "name": "fsw-vm-",
-                                "count": 1,
-                                "adminUserName": "[parameters('vm-settings').adminUserName]",
-                                "adminPassword": "[parameters('vm-settings').adminPassword]",
-                                "avsID": "[resourceId('Microsoft.Compute/availabilitySets', 'sql-avs')]",
-                                "imagePublisher": "[variables('vmOS')[parameters('vm-settings').type][0]]",
-                                "imageOffer": "[variables('vmOS')[parameters('vm-settings').type][1]]",
-                                "imageSku": "[variables('vmOS')[parameters('vm-settings').type][2]]",
-                                "nicName": "fsw-nic-",
-                                "vmSize": "Standard_D2_v2",
-                                "storageAccountContainerName": "[toLower(concat(resourceGroup().name, '-fsw-', uniqueString(resourceGroup().id, deployment().name)))]"
                             }
                         }
                     },
