@@ -969,7 +969,10 @@
             "name": "virtualNetworkDNS",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2016-09-01",
-            "dependsOn": [],
+            "dependsOn": [
+                "[resourceId('Microsoft.Resources/deployments', 'virtualNetwork')]",
+                "[resourceId('Microsoft.Resources/deployments', 'virtualMachines')]"
+            ],
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
