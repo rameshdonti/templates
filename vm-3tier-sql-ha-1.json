@@ -936,6 +936,7 @@
                                 "adminUserName": "[parameters('vm-settings').adminUserName]",
                                 "adminPassword": "[parameters('vm-settings').adminPassword]",
                                 "avsID": "[resourceId('Microsoft.Compute/availabilitySets', 'dc-avs')]",
+                                "domainName": "[parameters('dc-settings').domainName]",
                                 "imagePublisher": "[variables('vmOS')[parameters('vm-settings').type][0]]",
                                 "imageOffer": "[variables('vmOS')[parameters('vm-settings').type][1]]",
                                 "imageSku": "[variables('vmOS')[parameters('vm-settings').type][2]]",

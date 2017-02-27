@@ -288,7 +288,19 @@
                             "url": "[variables('dscScriptsUrl')]",
                             "folder": "active-directory",
                             "file": "[parameters('vm-settings').dc.dsc[copyIndex()]]",
-                            "function": "[parameters('vm-settings').dc.dsc[copyIndex()]]"
+                            "function": "[parameters('vm-settings').dc.dsc[copyIndex()]]",
+                            "properties": {
+                                "domainName": "[parameters('vm-settings').dc.domainName]",
+                                "adminCreds": {
+                                    "userName": "[parameters('vm-settings').dc.adminUserName]",
+                                    "password": "PrivateSettingsRef:adminPassword"
+                                }
+                            },
+                            "protectedSettings": {
+                                "items": {
+                                    "adminPassword": "[parameters('vm-settings').dc.adminPassword]"
+                                }
+                            }
                         }
                     }
                 }
