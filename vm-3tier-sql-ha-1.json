@@ -966,179 +966,60 @@
             }
         },
         {
-            "name": "updateDNSNetworkInterfaces",
+            "name": "virtualNetworkDNS",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2016-09-01",
-            "dependsOn": [
-                "[resourceId('Microsoft.Resources/deployments', 'networkInterfaces')]",
-                "[resourceId('Microsoft.Resources/deployments', 'virtualMachines')]"
-            ],
+            "dependsOn": [],
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[variables('nicTemplate')]",
+                    "uri": "[variables('vnetTemplate')]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
-                    "nic-settings": {
+                    "vnet-settings": {
                         "value": {
-                            "mgmt": {
-                                "name": "mgmt-nic-",
-                                "count": 1,
-                                "ipConfigurations": [
-                                    {
-                                        "name": "ipconfig1",
-                                        "properties": {
-                                            "privateIPAllocationMethod": "Dynamic",
-                                            "subnet": {
-                                                "id": "[concat(reference('virtualNetwork').outputs.vnetID.value, '/subnets/', parameters('vnet-settings').subnets.subnet0Name)]"
-                                            },
-                                            "loadBalancerInboundNatRules": [
-                                                {
-                                                    "id": "[concat(variables('extLbID'), '/inboundNatRules/nat-rdp-mgmt0')]"
-                                                }
-                                            ]
-                                        }
+                            "name": "[parameters('vnet-settings').name]",
+                            "newOrExisting": "Existing",
+                            "existingRg": "[resourceGroup().name]",
+                            "prefix": "[parameters('vnet-settings').prefix]",
+                            "subnets": [
+                                {
+                                    "name": "[parameters('vnet-settings').subnets.subnet0Name]",
+                                    "properties": {
+                                        "addressPrefix": "[parameters('vnet-settings').subnets.subnet0Prefix]"
                                     }
-                                ],
-                                "dnsSettings": {
-                                    "dnsServers": [
-                                        "[parameters('dc-settings').ipAddresses[0]]",
-                                        "[parameters('dc-settings').ipAddresses[1]]"
-                                    ]
                                 },
-                                "enableIPForwarding": false,
-                                "networkSecurityGroup": {
-                                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', 'mgmt-nsg')]"
-                                }
-                            },
-                            "web": {
-                                "name": "web-nic-",
-                                "count": "[parameters('vm-settings').count]",
-                                "ipConfigurations": [
-                                    {
-                                        "name": "ipconfig1",
-                                        "properties": {
-                                            "privateIPAllocationMethod": "Dynamic",
-                                            "subnet": {
-                                                "id": "[concat(reference('virtualNetwork').outputs.vnetID.value, '/subnets/', parameters('vnet-settings').subnets.subnet1Name)]"
-                                            },
-                                            "loadBalancerBackendAddressPools": [
-                                                {
-                                                    "id": "[variables('extLbBackendPoolID')]"
-                                                }
-                                            ]
-                                        }
+                                {
+                                    "name": "[parameters('vnet-settings').subnets.subnet1Name]",
+                                    "properties": {
+                                        "addressPrefix": "[parameters('vnet-settings').subnets.subnet1Prefix]"
                                     }
-                                ],
-                                "dnsSettings": {
-                                    "dnsServers": [
-                                        "[parameters('dc-settings').ipAddresses[0]]",
-                                        "[parameters('dc-settings').ipAddresses[1]]"
-                                    ]
                                 },
-                                "enableIPForwarding": false,
-                                "networkSecurityGroup": {
-                                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', 'web-nsg')]"
-                                }
-                            },
-                            "biz": {
-                                "name": "biz-nic-",
-                                "count": "[parameters('vm-settings').count]",
-                                "ipConfigurations": [
-                                    {
-                                        "name": "ipconfig1",
-                                        "properties": {
-                                            "privateIPAllocationMethod": "Dynamic",
-                                            "subnet": {
-                                                "id": "[concat(reference('virtualNetwork').outputs.vnetID.value, '/subnets/', parameters('vnet-settings').subnets.subnet2Name)]"
-                                            }
-                                        }
+                                {
+                                    "name": "[parameters('vnet-settings').subnets.subnet2Name]",
+                                    "properties": {
+                                        "addressPrefix": "[parameters('vnet-settings').subnets.subnet2Prefix]"
                                     }
-                                ],
-                                "dnsSettings": {
-                                    "dnsServers": [
-                                        "[parameters('dc-settings').ipAddresses[0]]",
-                                        "[parameters('dc-settings').ipAddresses[1]]"
-                                    ]
                                 },
-                                "enableIPForwarding": false,
-                                "networkSecurityGroup": {
-                                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', 'biz-nsg')]"
-                                }
-                            },
-                            "sql": {
-                                "name": "sql-nic-",
-                                "count": "[parameters('sql-settings').count]",
-                                "ipConfigurations": [
-                                    {
-                                        "name": "ipconfig1",
-                                        "properties": {
-                                            "privateIPAllocationMethod": "Dynamic",
-                                            "subnet": {
-                                                "id": "[concat(reference('virtualNetwork').outputs.vnetID.value, '/subnets/', parameters('vnet-settings').subnets.subnet3Name)]"
-                                            }
-                                        }
+                                {
+                                    "name": "[parameters('vnet-settings').subnets.subnet3Name]",
+                                    "properties": {
+                                        "addressPrefix": "[parameters('vnet-settings').subnets.subnet3Prefix]"
                                     }
-                                ],
-                                "dnsSettings": {
-                                    "dnsServers": [
-                                        "[parameters('dc-settings').ipAddresses[0]]",
-                                        "[parameters('dc-settings').ipAddresses[1]]"
-                                    ]
                                 },
-                                "enableIPForwarding": false,
-                                "networkSecurityGroup": {
-                                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', 'sql-nsg')]"
-                                }
-                            },
-                            "dc": {
-                                "name": "dc-nic-",
-                                "count": 2,
-                                "dnsSettings": {
-                                    "dnsServers": [
-                                        "[parameters('dc-settings').ipAddresses[0]]",
-                                        "[parameters('dc-settings').ipAddresses[1]]"
-                                    ]
-                                },
-                                "enableIPForwarding": false,
-                                "ipAddresses": "[parameters('dc-settings').ipAddresses]",
-                                "networkSecurityGroup": {
-                                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', 'dc-nsg')]"
-                                },
-                                "subnetId": {
-                                    "id": "[concat(reference('virtualNetwork').outputs.vnetID.value, '/subnets/', parameters('vnet-settings').subnets.subnet4Name)]"
-                                }
-                            },
-                            "fsw": {
-                                "name": "fsw-nic-",
-                                "count": 1,
-                                "ipConfigurations": [
-                                    {
-                                        "name": "ipconfig1",
-                                        "properties": {
-                                            "privateIPAllocationMethod": "Dynamic",
-                                            "subnet": {
-                                                "id": "[concat(reference('virtualNetwork').outputs.vnetID.value, '/subnets/', parameters('vnet-settings').subnets.subnet3Name)]"
-                                            }
-                                        }
+                                {
+                                    "name": "[parameters('vnet-settings').subnets.subnet4Name]",
+                                    "properties": {
+                                        "addressPrefix": "[parameters('vnet-settings').subnets.subnet4Prefix]"
                                     }
-                                ],
-                                "dnsSettings": {
-                                    "dnsServers": [
-                                        "[parameters('dc-settings').ipAddresses[0]]",
-                                        "[parameters('dc-settings').ipAddresses[1]]"
-                                    ]
-                                },
-                                "enableIPForwarding": false,
-                                "networkSecurityGroup": {
-                                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', 'sql-nsg')]"
                                 }
-                            }
+                            ],
+                            "dnsSettings": [
+                                "[parameters('dc-settings').ipAddresses[0]]",
+                                "[parameters('dc-settings').ipAddresses[1]]"
+                            ]
                         }
-                    },
-                    "base-config": {
-                        "value": "[parameters('base-config')]"
                     }
                 }
             }
