@@ -980,7 +980,7 @@
                     "vnet-settings": {
                         "value": {
                             "name": "[parameters('vnet-settings').name]",
-                            "newOrExisting": "Existing",
+                            "newOrExisting": "existing",
                             "existingRg": "[resourceGroup().name]",
                             "prefix": "[parameters('vnet-settings').prefix]",
                             "subnets": [
