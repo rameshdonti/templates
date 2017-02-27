@@ -897,6 +897,8 @@
                                 "adminUserName": "[parameters('vm-settings').adminUserName]",
                                 "adminPassword": "[parameters('vm-settings').adminPassword]",
                                 "avsID": "[resourceId('Microsoft.Compute/availabilitySets', 'web-avs')]",
+                                "dsc": "[parameters('vm-settings').webDsc]",
+                                "dscFolder": "[parameters('vm-settings').webDscFolder]",
                                 "imagePublisher": "[variables('vmOS')[parameters('vm-settings').type][0]]",
                                 "imageOffer": "[variables('vmOS')[parameters('vm-settings').type][1]]",
                                 "imageSku": "[variables('vmOS')[parameters('vm-settings').type][2]]",
@@ -941,6 +943,7 @@
                                 "imageOffer": "[variables('vmOS')[parameters('vm-settings').type][1]]",
                                 "imageSku": "[variables('vmOS')[parameters('vm-settings').type][2]]",
                                 "dsc": "[parameters('dc-settings').dsc]",
+                                "dscFolder": "[parameters('dc-settings').dscFolder]",
                                 "nicName": "dc-nic-",
                                 "vmSize": "Standard_D2_v2",
                                 "storageAccountContainerName": "[toLower(concat(resourceGroup().name, '-dc-', uniqueString(resourceGroup().id, deployment().name)))]"

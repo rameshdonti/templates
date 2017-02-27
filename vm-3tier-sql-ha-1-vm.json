@@ -286,7 +286,7 @@
                             "typeHandlerVersion": "2.9",
                             "vmName": "[concat(parameters('vm-settings').dc.name, copyIndex())]",
                             "url": "[variables('dscScriptsUrl')]",
-                            "folder": "active-directory",
+                            "folder": "[parameters('vm-settings').dc.dscFolder]",
                             "file": "[parameters('vm-settings').dc.dsc[copyIndex()]]",
                             "function": "[parameters('vm-settings').dc.dsc[copyIndex()]]",
                             "properties": {
@@ -301,6 +301,42 @@
                                     "adminPassword": "[parameters('vm-settings').dc.adminPassword]"
                                 }
                             }
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "name": "[concat('dscScriptInstallIIS', copyindex())]",
+            "copy": {
+                "name": "dscScriptLoop",
+                "count": "[parameters('vm-settings').web.count]"
+            },
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2016-09-01",
+            "dependsOn": [
+                "[resourceId('Microsoft.Resources/deployments', concat('webVm', copyindex()))]"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('dscTemplate')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "extn-settings": {
+                        "value": {
+                            "name": "dsc-install-iis",
+                            "publisher": "Microsoft.Powershell",
+                            "type": "DSC",
+                            "typeHandlerVersion": "2.9",
+                            "vmName": "[concat(parameters('vm-settings').web.name, copyIndex())]",
+                            "url": "[variables('dscScriptsUrl')]",
+                            "folder": "[parameters('vm-settings').web.dscFolder]",
+                            "file": "[parameters('vm-settings').web.dsc]",
+                            "function": "[parameters('vm-settings').web.dsc]",
+                            "properties": null,
+                            "protectedSettings": null
                         }
                     }
                 }
